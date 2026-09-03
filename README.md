@@ -1,18 +1,17 @@
-# habify30 Knowledge Repository
+# Habify30 Knowledge Repository
 
-**Version:** 1.0
+**Version:** 1.1
 **Status:** Active Development
 **Repository Purpose:** Canonical Knowledge Base
-**Primary Consumer:** Claude Projects
-**Secondary Consumers:** GPT, Gemini, Cursor, Humans
+**Last structural change:** 2026-09-03 — migrated from OneDrive to Git
 
 ---
 
 # Purpose of this Repository
 
-This repository is the canonical knowledge base for the habify30 project.
+This repository is the canonical knowledge base for the Habify30 project.
 
-It preserves the relevant knowledge required to understand, develop, improve and operate habify30.
+It preserves the relevant knowledge required to understand, develop, improve and operate Habify30.
 
 It is intentionally **not** a chat export.
 
@@ -26,47 +25,37 @@ Whenever contradictions exist between historical discussions and this repository
 
 ---
 
+# Read This First
+
+Before proposing product changes, writing content or building anything:
+
+1. **`00_Index.md`** — topic index to the Decision Log. Look up which DL entries touch the topic at hand. Only then build. This step is not optional; the index exists because it was once skipped.
+2. **`13_AI_Working_Context.md`** — judgement criteria for product proposals: behavioural hypothesis before feature, simplicity as a design goal, architecture versus implementation, evidence tiers.
+3. **`09_Decision_Log.md`** — read selectively, never in one pass. At roughly 125,000 characters it is silently truncated when read whole. Access it through the index, section by section.
+
+`CLAUDE.md` in the repository root holds the working rules for the repository itself — governance, what belongs here, what does not. It is loaded automatically by Claude Code; on other surfaces this README is the entry point.
+
+---
+
 # Where this Repository Lives
 
-As of 2026-07-07, this repository is maintained locally at:
+As of 2026-09-03, this repository is a Git repository in Azure DevOps:
 
-`C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\04_Product_Capabilities\habify30`
+`https://dev.azure.com/kado-org/kado/_git/habify`
 
-Claude accesses this folder directly via a filesystem connector. The Claude Project's file storage intentionally holds only this README as a pointer — the 21 canonical documents are not duplicated there. This avoids the two-system divergence risk that existed when both a project upload and a local copy were maintained in parallel.
+It replaces the previous OneDrive folder as the authoritative location. The OneDrive folder still holds source material that does not belong in Git — Word documents, PDFs, spreadsheets, course materials and transient working documents. Those remain there by design; Git carries text only.
 
----
-
-# Repository Scope
-
-This repository is the single source of truth for habify30's product
-rationale, decisions, and production material (content drafts,
-phase-specific assets referenced by filename, Fillout form text) — see
-17_Production_Asset_Architecture.md for the full structure (decided
-2026-07-08, DL-024).
-
-It is deliberately **not** the source of truth for:
-
-- Marketing and sales material, which lives at
-  `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\05_Marketing_Sales\05_Materials\habify30\`,
-  alongside other Kado products' marketing material.
-- Binary design assets (images, illustrations, icons), which live at
-  `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\03_Resources\01_Design\`,
-  managed via Magnific project lists. Production documents in this
-  repository reference these assets by filename only.
-
-Where contradictions exist between historical discussions and this
-repository regarding product rationale and decisions, this repository
-remains the authoritative source, per the Repository Purpose section above.
+Product code lives in a separate repository, `habify-app`, not here.
 
 ---
 
-# What is habify30?
+# What is Habify30?
 
-habify30 is a B2B behaviour change product for organisations.
+Habify30 is a B2B behaviour change product for organisations.
 
 It helps employees translate learning, training and development experiences into sustained behavioural change in everyday work.
 
-habify30 starts where many learning interventions end:
+Habify30 starts where many learning interventions end:
 
 After the workshop.
 
@@ -101,7 +90,7 @@ As a result, much of the intended behavioural change never becomes part of daily
 
 This is the transfer gap.
 
-habify30 exists to close this gap.
+Habify30 exists to close this gap.
 
 ---
 
@@ -111,7 +100,7 @@ Knowledge rarely changes behaviour on its own.
 
 Repeated behaviour changes behaviour.
 
-Therefore habify30 focuses on building sustainable work habits instead of providing more content.
+Therefore Habify30 focuses on building sustainable work habits instead of providing more content.
 
 Learning is treated as a catalyst.
 
@@ -133,19 +122,19 @@ Create a simple, evidence-informed transfer architecture that helps employees tu
 
 # Product Principle
 
-habify30 does not compete with learning platforms.
+Habify30 does not compete with learning platforms.
 
-habify30 complements them.
+Habify30 complements them.
 
 Existing platforms optimise learning.
 
-habify30 optimises transfer.
+Habify30 optimises transfer.
 
 ---
 
 # Positioning
 
-habify30 is positioned as a transfer architecture rather than an e-learning platform.
+Habify30 is positioned as a transfer architecture rather than an e-learning platform.
 
 The value proposition is not:
 
@@ -159,7 +148,7 @@ The value proposition is:
 
 # Target Market
 
-habify30 is currently designed as a B2B product for organisations that already invest in learning and development.
+Habify30 is currently designed as a B2B product for organisations that already invest in learning and development.
 
 Typical buyers include:
 
@@ -201,9 +190,9 @@ They may include:
 
 # Business Principle
 
-The organisation finances habify30 because it benefits from improved transfer and greater return on learning investments.
+The organisation finances Habify30 because it benefits from improved transfer and greater return on learning investments.
 
-Participants receive habify30 as part of an organisational development journey.
+Participants receive Habify30 as part of an organisational development journey.
 
 The product is therefore designed to create value for both:
 
@@ -214,7 +203,7 @@ The product is therefore designed to create value for both:
 
 # Scientific Foundation
 
-habify30 draws upon established research in:
+Habify30 draws upon established research in:
 
 * behaviour change
 * habit formation
@@ -238,7 +227,7 @@ Major building blocks have been specified.
 
 Several core product decisions are considered stable:
 
-* habify30 is a B2B product.
+* Habify30 is a B2B product.
 * The primary problem is transfer, not learning.
 * The product supports behavioural implementation after learning interventions.
 * The user journey is structured around a ~6-week transfer process, with a 30-day Momentum Phase at its core (Ready Check, Impulsphase, Veränderungswerkstatt, Momentum).
@@ -253,81 +242,70 @@ Implementation details continue to evolve.
 
 This repository is organised into independent knowledge domains.
 
-## Core Documents
+## Entry Points
 
 * `README.md`
-  Entry point and repository overview.
-
+  This document. Entry point and repository overview.
+* `CLAUDE.md`
+  Working rules for the repository: governance, boundaries, what does not belong here.
+* `00_Index.md`
+  Topic index to the Decision Log. Consult before building anything.
 * `Glossary.md`
   Definitions of key terms.
-
-* `Working with Matthias.txt`
-  Working style, rationale and decision patterns of the primary product designer.
+* `Canon.md`
+  Immutable product principles.
 
 ## Product Documentation
 
 * `01_Project_summary.md`
-  High-level overview of habify30.
-
+  High-level overview of Habify30.
 * `02_Product_Vision.md`
-  Why habify30 exists.
-
+  Why Habify30 exists.
 * `03_Product_Architecture.md`
   Overall product structure and transfer journey.
-
 * `04_Business_Model.md`
   Commercial model and B2B positioning.
-
 * `05_User_Journey.md`
   Participant experience and psychological journey.
-
 * `06_Transfer_Architecture.md`
   Conceptual core and behavioural mechanisms.
-
 * `07_Content_Architecture.md`
   Content principles and interaction design.
-
 * `08_Research.md`
   Scientific foundations.
-
 * `09_Decision_Log.md`
-  Major product decisions and rationale.
-
+  Major product decisions and rationale. Read through the index, never whole.
 * `10_Rejected_Ideas.md`
   Ideas intentionally not pursued.
-
 * `11_Open_Questions.md`
   Known unresolved questions.
-
-* `12_Backlog_md.txt`
+* `12_Backlog.md`
   Future opportunities and possible development items.
-
 * `13_AI_Working_Context.md`
-  Guidance for AI systems working on habify30.
-
+  Judgement criteria for AI systems working on Habify30.
 * `14_Project_History.md`
   Evolution of the project.
-
 * `15_Technical_Architecture.md`
-  The current technical architecture status of habify30.
-
+  Current technical architecture status.
 * `16_Programminhalte.md`
   Programme content detail (German), corrected against decisions through 2026-07-03.
-
 * `17_Production_Asset_Architecture.md`
-  Production asset architecture: where production material lives relative to canonical rationale, and what this repository deliberately does not store.
-
+  Production asset structure.
+* `Catalyst_Platform_Capabilities.md`
+  Verified capabilities and limits of the Zoho Catalyst platform.
 * `SCORMxFillout_ProjectID_UserID_Architecture.md`
   Pseudonymous identifier architecture (pid/user_id) for the combined module.
-
 * `SCORMxFillout_Connector_Export.md`
   SCORM↔Fillout↔Zoho connector implementation reference.
 
-* `Catalyst_Platform_Capabilities.md`
-  Empirical measurements of Zoho Catalyst capabilities relevant to habify30: Slate frontend hosting (Cluster A), ZCQL / Data Store query capabilities (Cluster B), Backup/DR (Cluster C). Updated as new measurements are taken. Referenced by DL-068 and DL-069.
+---
 
-* `Canon.md`
-  Immutable product principles.
+# What Does Not Live Here
+
+* **Code** — separate repository, `habify-app`.
+* **Binary files and assets** — Word documents, PDFs, spreadsheets, course materials and design artefacts stay in OneDrive and Figma. Git carries text only.
+* **Personal data** — no exception, on any surface.
+* **Transient working documents** — handoff briefs, propagation notes, session states. These remain outside the repository, or under `.wip/`, which is gitignored.
 
 ---
 
@@ -369,7 +347,7 @@ Unknown information is never invented.
 
 This repository is intended to evolve together with the project.
 
-It should become the single source of truth for habify30.
+It should become the single source of truth for Habify30.
 
 ---
 
@@ -377,19 +355,19 @@ It should become the single source of truth for habify30.
 
 ## Established
 
-* habify30 focuses on behavioural transfer rather than knowledge delivery.
-* habify30 is currently scoped as a B2B product for organisations.
+* Habify30 focuses on behavioural transfer rather than knowledge delivery.
+* Habify30 is currently scoped as a B2B product for organisations.
 * The product complements existing learning and development interventions.
 * Everyday work is the primary implementation environment.
 * The ~6-week transfer journey, with its 30-day Momentum Phase, is the central product structure.
-* This repository is maintained locally; the Claude Project file store holds only this README as a pointer.
-* Repository scope covers product rationale and production material; marketing material and binary design assets are deliberately stored outside the repository (see DL-024, 17_Production_Asset_Architecture.md).
+* The repository is maintained in Git; Azure DevOps `habify` is the authoritative location.
 
 ## Working Assumptions
 
 * Technical implementation details may change.
 * Client-specific adaptations may be required.
 * Future product variants may emerge, but they are outside the current scope.
+* The repository governance model is under empirical trial and not yet formalised.
 
 ## Open Questions
 
@@ -397,3 +375,4 @@ It should become the single source of truth for habify30.
 * Long-term reporting and analytics architecture.
 * Pricing and licensing model.
 * Degree of customisation for different client programmes.
+* Document language: the corpus is English, repository working rules are German. Not yet decided whether this stays.

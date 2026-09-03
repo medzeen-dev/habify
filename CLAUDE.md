@@ -1,7 +1,10 @@
-# habify — Arbeitsregeln
+# Arbeitsregeln habify
 
 Wissens-Repo für Habify30. Produkt unter Kado, so geführt, dass es als eigene Brand
 abtrennbar bleibt: dieses Repo ist per Clone vollständig portabel (§9).
+
+**Einstieg: `README.md`.** Dort steht, was das Repo enthält und in welcher Reihenfolge zu
+lesen ist. Diese Datei regelt ausschließlich die Repo-Mechanik — kein Duplikat.
 
 ## Governance — leicht, bewusst
 
@@ -25,11 +28,13 @@ Kein Schema-Frontmatter-Zwang. Die Kado-`typ`-Werteliste gilt hier nicht.
 
 ## Was hier nicht liegt
 
-- **Code** — eigenes Repo (§13).
-- **Binärdateien und Assets** — nie in Git (§6). Figma bleibt autoritativ für
-  Design-Artefakte, das Repo trägt nur den Verweis.
+- **Code** — eigenes Repo `habify-app` (§13).
+- **Binärdateien und Assets** — nie in Git (§6). Quelldokumente, Kursmaterial und
+  Design-Artefakte bleiben in OneDrive bzw. Figma; das Repo trägt nur den Verweis.
 - **Personenbezogene Daten** — harte Grenze, keine Ausnahme (§15.1, „Git ist
   personenbezugsfrei"). Gilt hier genauso wie in `kado`.
+- **Awaris-Material** — Partner-Sphäre, nie in einem Kado-Repo (DL-2026-001 ff.).
+- **Nicht-kanonische Arbeitszustände** — unter `.wip/`, gitignored.
 
 ## Bindung an Kado-Normen
 
@@ -37,6 +42,17 @@ Werkzeug-Verträge und -Konventionen leben in `kado` und gelten hier per Verweis
 per Kopie. Ein Werkzeug, ein Vertrag — auch wenn es in mehreren Sphären genutzt wird.
 
 Relevant, sobald geschrieben: Figma-Vertrag und -Konvention (existieren noch nicht).
+
+## Oberflächen und ihre Einstiege
+
+Diese Datei wird von Claude Code über den Pfad geladen, nicht über Retrieval
+(schema.md, DL-2026-011). Auf anderen Oberflächen greift sie nicht automatisch:
+
+- **Claude Code** → `CLAUDE.md` (automatisch)
+- **Claude-Projekt** → Projekt-Instruktion im UI-Feld; sie verweist auf `README.md`
+- **Mensch, GitHub, andere KI** → `README.md`
+
+Ändert sich die Leseordnung, ist sie in `README.md` zu ändern — nicht hier.
 
 ## Skripte
 
