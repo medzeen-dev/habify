@@ -31,9 +31,10 @@ Before proposing product changes, writing content or building anything:
 
 1. **`00_Index.md`** — topic index to the Decision Log. Look up which DL entries touch the topic at hand. Only then build. This step is not optional; the index exists because it was once skipped.
 2. **`13_AI_Working_Context.md`** — judgement criteria for product proposals: behavioural hypothesis before feature, simplicity as a design goal, architecture versus implementation, evidence tiers.
-3. **`09_Decision_Log.md`** — read selectively, never in one pass. At roughly 125,000 characters it is silently truncated when read whole. Access it through the index, section by section.
+3. **`Working_with_Matthias.md`** — working style, tone and decision patterns of the primary product designer.
+4. **`09_Decision_Log.md`** — read selectively, never in one pass. At roughly 125,000 characters it is silently truncated when read whole. Access it through the index, section by section.
 
-`CLAUDE.md` in the repository root holds the working rules for the repository itself — governance, what belongs here, what does not. It is loaded automatically by Claude Code; on other surfaces this README is the entry point.
+`CLAUDE.md` in the repository root holds the working rules for the repository itself — governance, boundaries, what does not belong here. It is loaded automatically by Claude Code; on other surfaces this README is the entry point.
 
 ---
 
@@ -44,6 +45,8 @@ As of 2026-09-03, this repository is a Git repository in Azure DevOps:
 `https://dev.azure.com/kado-org/kado/_git/habify`
 
 It replaces the previous OneDrive folder as the authoritative location. The OneDrive folder still holds source material that does not belong in Git — Word documents, PDFs, spreadsheets, course materials and transient working documents. Those remain there by design; Git carries text only.
+
+A GitHub mirror feeds derived copies into AI project surfaces. Those copies may lag behind `main`. Git is authoritative.
 
 Product code lives in a separate repository, `habify-app`, not here.
 
@@ -250,6 +253,8 @@ This repository is organised into independent knowledge domains.
   Working rules for the repository: governance, boundaries, what does not belong here.
 * `00_Index.md`
   Topic index to the Decision Log. Consult before building anything.
+* `Working_with_Matthias.md`
+  Working style, rationale and decision patterns of the primary product designer.
 * `Glossary.md`
   Definitions of key terms.
 * `Canon.md`
@@ -313,6 +318,16 @@ This repository is organised into independent knowledge domains.
 
 Every document follows the same rules.
 
+## Language
+
+Documents are written in English. This is the established convention across the repository.
+
+`CLAUDE.md` is the exception: it addresses repository governance within the Kado system and is written in German, like the Kado canon it references.
+
+Feedback and discussion with Matthias is in German.
+
+---
+
 ## Facts over assumptions
 
 Whenever possible, documented knowledge represents confirmed project decisions.
@@ -375,4 +390,3 @@ It should become the single source of truth for Habify30.
 * Long-term reporting and analytics architecture.
 * Pricing and licensing model.
 * Degree of customisation for different client programmes.
-* Document language: the corpus is English, repository working rules are German. Not yet decided whether this stays.
