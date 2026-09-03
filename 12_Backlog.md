@@ -444,11 +444,13 @@ Each re-entry is intended to be fully independent — a new pseudonymous identif
 
 ---
 
-## PB-039
+## PB-039 — Superseded in part (see DL-076)
 
 Fully custom responsive website (replacing Rise 360 entirely)
 
-Considered as an alternative to the Rise-360-Web-Export approach adopted in DL-028, but deliberately not pursued now. Would remove dependency on Rise 360 as an authoring tool entirely in favour of a bespoke responsive web application. Not evaluated in depth; flagged for possible future reconsideration if Rise 360's constraints become limiting at scale.
+Considered as an alternative to the Rise-360-Web-Export approach adopted in DL-028, but deliberately not pursued at the time. Would remove dependency on Rise 360 as an authoring tool entirely in favour of a bespoke responsive web application.
+
+**Update 2026-07-14 (DL-076):** Executed for the combined module specifically (Impulsphase, Veränderungswerkstatt, Momentum) — lessons are now self-built as Markdown files with a typed content-block renderer, no Rise 360. This is narrower than PB-039's original "replacing Rise 360 entirely" framing: Ready Check's delivery mechanism is unaffected by DL-076 and remains a Rise Web Export until a separate decision addresses it. PB-039 stays open with respect to Ready Check.
 
 ---
 

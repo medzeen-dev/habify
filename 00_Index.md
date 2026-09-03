@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-07-16 (Decision Log bei DL-075)
+**Stand:** 2026-09-03 (Decision Log bei DL-076)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -63,7 +63,8 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 
 | DL | Inhalt |
 |---|---|
-| **DL-030** | Shell/iframe-Architektur · **jede Phase als eigener Rise Web Export** *(hinfällig durch die Rise-Ablösung — Korrekturnotiz steht aus)* |
+| **DL-030** | Shell-Architektur · Phasen-Freischaltung per Datum/Fortschritt, Shell-Routing erzwingt Gate *(Rise/iframe-Mechanik durch DL-076 ersetzt — Korrekturnotiz eingetragen)* |
+| **DL-076** | **Rise 360 abgelöst.** Lektionen selbstgebaut als Markdown + Frontmatter, Block-Renderer, kein iframe mehr · 12 Lektionen über 3 Phasen · Video: selbstgehostet MP4 · Aufwand ~2,5 PT · korrigiert DL-030. Ready Check von dieser Entscheidung nicht erfasst (offen) |
 | **DL-032** | Markenauftritt teilt sich: Marketing = Kado-Submarke · Shell = eigenständig · *Korrekturnotiz durch DL-041* |
 | **DL-039** | Home-Tab als vierter, gleichrangiger Tab · **Standard-Landing-Tab bei jedem Rückbesuch** · Element-Inventar · *Korrekturnotizen durch DL-045 und DL-052* |
 | **DL-041** | Nav teilt sich nach Breakpoint: Desktop = volle Labels · Mobil = Burger · Kundenlogo-Slot · *Korrekturnotizen durch DL-044* |
@@ -163,7 +164,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-021** | Aufgehoben durch DL-023 |
 | **DL-022** | Aufgehoben durch DL-030 (SCORM → Web Export) |
 | **DL-028 (Hosting OVHcloud/Web Client)** | Frontend-Host zu Catalyst Slate gewechselt — Korrekturnotiz durch DL-068 eingetragen |
-| **DL-030** | **Tragende Annahme hinfällig** durch die Rise-Ablösung (2026-07-13). Korrekturnotiz steht noch aus |
+| **DL-030 (Rise/iframe-Mechanik)** | Ersetzt durch DL-076 (Markdown-Lektionen, kein iframe) — Korrekturnotiz eingetragen. Release-Gating-Prinzip selbst bleibt in Kraft |
 | **DL-031 (Hard-Lock-Fall)** | „URL pid absent, cache empty → Hard Lock mit manueller pid-Eingabe" — **ersetzt durch Fehlerseite Zustand F** (DL-062). Korrekturnotiz in DL-031 eingetragen. |
 
 ---

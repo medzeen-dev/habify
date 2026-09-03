@@ -143,7 +143,9 @@ Participants who proceed into the programme have had an honest opportunity to se
 
 > **Correction note (2026-07-10, DL-030):** The delivery mechanism referenced below (SCORM) is superseded by DL-028 (self-hosted Rise Web Export) and, for the main programme's packaging, further refined by DL-030 (per-phase exports orchestrated by a persistent Shell, not one combined package). Updated below for consistency; see 15_Technical_Architecture.md for full current mechanics.
 
-The Ready Check ships as its own Rise Web Export, separate from the main programme (Impulsphase, Veränderungswerkstatt, Momentum), which as of DL-030 ships as three separate per-phase Rise Web Exports rather than one combined package, orchestrated by a persistent Shell. There is no prerequisite/gating mechanism and no `user_id` continuity between Ready Check and the Shell-orchestrated phases. Whether Ready Check shares the Shell's cohort `pid` is an open question — see 11_Open_Questions.md, OQ-025. See 15_Technical_Architecture.md for tracking requirements (aggregated, `pid`-only outcome reporting) and the Shell architecture (DL-030).
+> **Correction note (2026-07-14, DL-076):** For the main programme (Impulsphase, Veränderungswerkstatt, Momentum), Rise 360 is dropped — lessons are self-built Markdown, not a Rise Web Export. **Not decided by DL-076:** whether Ready Check's own delivery mechanism, described in the sentence below, is also affected — the 2026-07-14 discussion scoped only the main programme's combined module. Treat Ready Check's Rise-based delivery as unchanged until a separate decision addresses it.
+
+The Ready Check ships as its own Rise Web Export, separate from the main programme (Impulsphase, Veränderungswerkstatt, Momentum). As of DL-076, the main programme's lessons are self-built Markdown rendered natively by the Shell, no longer Rise Web Exports; orchestration by a persistent Shell (DL-030) is unchanged. There is no prerequisite/gating mechanism and no `user_id` continuity between Ready Check and the Shell-orchestrated phases. Whether Ready Check shares the Shell's cohort `pid` is an open question — see 11_Open_Questions.md, OQ-025. See 15_Technical_Architecture.md for tracking requirements (aggregated, `pid`-only outcome reporting) and the Shell architecture (DL-030).
 
 ---
 
@@ -483,7 +485,7 @@ The architecture therefore spends most of its effort supporting what happens aft
 
 - Four-phase transfer architecture: Ready Check, Impulsphase, Veränderungswerkstatt, Momentum. Total programme length ~6 weeks; the 30-day figure refers specifically to the Momentum Phase, not the whole journey.
 - Ready Check is a free, unregistered qualification tool with no gate function (see DL-023). Ready Check ships as a separate Rise Web Export with no technical connection to the Shell-orchestrated Impulsphase/Veränderungswerkstatt/Momentum phases (DL-028, DL-030), and runs its own, independently-scoped Shell rather than sharing the main programme Shell's `pid` access lifecycle (DL-033). Two customer-facing entry pathways exist: Ready-Check-first (via the client's own portal) and direct registration bypassing it (DL-033).
-- Impulsphase, Veränderungswerkstatt and Momentum each ship as their own separate Rise Web Export, orchestrated by a persistent Shell (DL-030) — not as one combined package.
+- Impulsphase, Veränderungswerkstatt and Momentum are each orchestrated by a persistent Shell (DL-030) — not as one combined package. **Superseded by DL-076:** lesson content is no longer a Rise Web Export; lessons are self-built Markdown, rendered natively by the Shell (no iframe).
 - Behavioural implementation is the primary objective.
 - Reflection and repetition are core mechanisms.
 - Peer support strengthens transfer.

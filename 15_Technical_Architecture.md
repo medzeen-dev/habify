@@ -210,7 +210,9 @@ See `Claude_Tooling/Catalyst_Functions/README.md` for the function-by-function s
 
 ## Shell Architecture for Multi-Export Delivery — Decided (DL-030)
 
-Full mechanics for the per-phase Web Export delivery model. See DL-030 for the decision narrative and rationale; this section holds the technical detail. Supersedes the "single combined Web Export" framing in "Resilience & Recovery Architecture for Web Export — Decided (DL-028)" above.
+> **Correction note (2026-07-14, DL-076):** Rise 360 is dropped for the combined module. The `<iframe>`/`RiseLMSInterface` mechanics described in this section are superseded — phase content is native Markdown, loaded and rendered directly by the Shell, no iframe, no `window.RiseLMSInterface` bridge. The per-phase release-gating *principle* (date/progress-based, enforced by Shell routing logic, bundle not fetched until release) remains in force; only the thing being gated changes, from a Rise export bundle to a Markdown lesson set. The exact loader/routing/rendering mechanics for the Markdown architecture are not yet specified in this document — see DL-076, flagged there as an open build-architecture task, not invented here. Ready Check's delivery mechanism is unaffected by this correction.
+
+Full mechanics for the per-phase Web Export delivery model **(historical — superseded by DL-076 for the combined module; see correction note above)**. See DL-030 for the decision narrative and rationale; this section holds the technical detail. Supersedes the "single combined Web Export" framing in "Resilience & Recovery Architecture for Web Export — Decided (DL-028)" above.
 
 **Per-phase exports.** Each phase (Impulsphase, Veränderungswerkstatt, Momentum) is authored and published as its own, independently loadable Rise Web Export. Ready Check remains separate and unaffected (unchanged from DL-023/DL-028).
 
@@ -670,7 +672,7 @@ Whether the first MVP should be no-code, low-code or custom-built.
 
 ## TD-013
 
-Shell / progress-tracking architecture. — Decided (DL-030). A persistent Shell page (not a Rise export) orchestrates per-phase Web Export loading via `<iframe>`, defines `window.RiseLMSInterface` to translate Rise's native progress calls into `user_id`-keyed writes (`localStorage`, mirrored to Catalyst), and enforces phase-release gating via routing logic. See "Shell Architecture for Multi-Export Delivery — Decided (DL-030)" above.
+Shell / progress-tracking architecture. — Decided (DL-030), **Rise/iframe mechanism superseded (DL-076)**. A persistent Shell page orchestrates per-phase content loading and enforces phase-release gating via routing logic. As of DL-076, phase content is native Markdown rendered directly by the Shell (no `<iframe>`, no `window.RiseLMSInterface` bridge); the progress-write target (`localStorage`, mirrored to Catalyst) is unchanged, only the source of progress events changes. See "Shell Architecture for Multi-Export Delivery — Decided (DL-030)" above and DL-076.
 
 ---
 
@@ -821,7 +823,7 @@ The next technical step should be defining the minimum viable system required to
 * Catalyst Slate serves SPA deep-links at HTTP 200, from root base-path, with Static framework auto-detection; multiple Slate apps per project are supported. Cache-control is `public, max-age=31536000` on all resources including Shell HTML — hash-based asset names are required (DL-068, empirically measured; see Catalyst_Platform_Capabilities.md Cluster A).
 * Native ZCQL aggregation (GROUP BY / AVG / SUM / COUNT / subqueries) is sufficient for the habify30 dashboard at expected volumes. `COUNT(DISTINCT)` silently ignores DISTINCT — distinct-participant counts must use subqueries or GROUP-BY-then-count (DL-069, empirically measured; see Catalyst_Platform_Capabilities.md Cluster B).
 * The Web Export resilience/recovery backend is split into three independently deployed Catalyst functions (`accesscontrol`, `recovery`, `zohoformswebhook`), all built, tested, and deployed to Development and Production with working CORS (DL-029).
-* Each phase (Impulsphase, Veränderungswerkstatt, Momentum) ships as its own separate Rise Web Export — not one combined package — orchestrated by a persistent Shell that defines a `window.RiseLMSInterface` bridge for progress tracking and enforces per-`pid` phase-release gating (DL-030).
+* Each phase (Impulsphase, Veränderungswerkstatt, Momentum) is orchestrated by a persistent Shell that enforces per-`pid` phase-release gating (DL-030). **Superseded by DL-076:** phase content is no longer a Rise Web Export — Rise 360 is dropped; lessons are self-built Markdown files with a typed content-block renderer, loaded natively by the Shell (no `<iframe>`, no `window.RiseLMSInterface` bridge). Exact loader/routing mechanics not yet specified — flagged as an open build-architecture task in DL-076.
 * `pid` may be cached in `localStorage` as a validated fallback to the URL parameter, with a defined URL-vs-cache conflict flow, seat-limit notification, and expiry mechanics (`AccessControl` gains `expiryOverride` and seat-limit fields) (DL-031).
 * The Shell carries no textual Kado reference but shares habify30's Kado-subbrand visual family (logo form, typography, accent colour #b37357) (DL-032). Per-`pid` client logo on the Shell start page is an unresolved idea, not a decision.
 * Ready Check runs its own, independently-scoped Shell, separate from the main programme Shell's `pid` access lifecycle; two customer-facing entry pathways (Ready-Check-first, and direct registration bypassing it) are defined (DL-033).

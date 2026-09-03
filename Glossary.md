@@ -306,7 +306,9 @@ A technically isolated feature context that runs without `user_id` continuity in
 
 # Shell
 
-The persistent page (`habify30.k-a-d-o.com`) that orchestrates delivery of the per-phase Rise Web Exports (Impulsphase, Veränderungswerkstatt, Momentum). It is the participant's actual entry point — not itself a Rise export. It performs the `pid`/`user_id` lifecycle work (validation, caching, conflict resolution, expiry), renders phase navigation, and loads the active phase inside an `<iframe>` when selected. See DL-030.
+The persistent page (`habify30.k-a-d-o.com`) that orchestrates delivery of per-phase content (Impulsphase, Veränderungswerkstatt, Momentum). It is the participant's actual entry point. It performs the `pid`/`user_id` lifecycle work (validation, caching, conflict resolution, expiry), renders phase navigation, and loads the active phase's content. See DL-030.
+
+> **Correction note (2026-07-14, DL-076):** "Loads the active phase inside an `<iframe>`" is superseded. Rise 360 is dropped for the combined module; phase content is native Markdown, rendered directly by the Shell, no iframe. See DL-076.
 
 Carries no textual Kado reference in its chrome, but shares the same visual family (logo form, typography, accent colour #b37357) as habify30's Kado-subbrand marketing presence. See DL-032.
 
@@ -314,9 +316,11 @@ Ready Check runs its own, separate Shell, independently scoped from this Shell's
 
 ---
 
-# RiseLMSInterface Bridge
+# RiseLMSInterface Bridge (historical — superseded, DL-076)
 
-The `window.RiseLMSInterface` object the Shell defines on the page embedding each phase's Web Export iframe. Rise Web Exports auto-detect and call this object's methods (`setBookmark`, `setLessonProgress`, `setCourseProgress`, `finish`, and others); the Shell translates these calls into `user_id`-keyed progress writes (`localStorage`, mirrored to Catalyst). This is habify30's progress-tracking mechanism for the Web Export delivery path — not xAPI, not a custom LRS. See DL-030.
+> **Correction note (2026-07-14, DL-076):** Rise 360 is dropped for the combined module; this bridge no longer exists in the active architecture. Entry retained for historical reference only — do not build against this.
+
+The `window.RiseLMSInterface` object the Shell defined on the page embedding each phase's Rise Web Export iframe. Rise Web Exports auto-detect and call this object's methods (`setBookmark`, `setLessonProgress`, `setCourseProgress`, `finish`, and others); the Shell translated these calls into `user_id`-keyed progress writes (`localStorage`, mirrored to Catalyst). This was habify30's progress-tracking mechanism for the Rise Web Export delivery path — not xAPI, not a custom LRS. See DL-030, DL-076.
 
 ---
 

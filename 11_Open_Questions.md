@@ -589,6 +589,16 @@ Topic labels are subject to Art. 9 GDPR and require explicit consent under Art. 
 
 ---
 
+## OQ-035
+
+### Exact self-hosted video mechanism for combined-module lessons
+
+DL-076 decides self-hosted MP4 over Vimeo (`?dnt=1`) or an EU CDN provider, resolving the choice of *where* video lives. Not decided: the specific storage/bandwidth provider, whether any transcoding or adaptive-bitrate approach is used, and how this interacts with the EU-only/no-third-party-CDN principle (DL-028 correction note, DL-043) if a CDN layer is later added in front of self-hosted storage for bandwidth reasons.
+
+**Status:** Open. Not a blocker for the Markdown/block-renderer build itself (video is one block type among several); becomes relevant once the `Video` block type is implemented.
+
+---
+
 # Prioritisation
 
 Current priorities are considered to be:
