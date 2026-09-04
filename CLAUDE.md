@@ -41,7 +41,8 @@ Kein Schema-Frontmatter-Zwang. Die Kado-`typ`-Werteliste gilt hier nicht.
 Werkzeug-Verträge und -Konventionen leben in `kado` und gelten hier per Verweis, nicht
 per Kopie. Ein Werkzeug, ein Vertrag — auch wenn es in mehreren Sphären genutzt wird.
 
-Relevant, sobald geschrieben: Figma-Vertrag und -Konvention (existieren noch nicht).
+Relevant und in Kraft: `VTR-figma`, `KONV-figma`, `KONV-visuelle-zugaenglichkeit` und der
+Ausführungs-Skill `figma-bauen` (alle in `kado`), gelten hier per Verweis. Siehe DL-077.
 
 ## Oberflächen und ihre Einstiege
 

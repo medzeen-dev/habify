@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-03 (Decision Log bei DL-076)
+**Stand:** 2026-09-04 (Decision Log bei DL-078)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -105,6 +105,8 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-051** | Wizard-Copy: **„Auch wir nicht"** hat dieselbe Schutzklasse wie Coach-Widget-Copy — nicht weichspülen · *siehe auch DL-064 (war an drei von drei Stellen aufgeweicht)* |
 | **DL-064** | Eingefrorene DL-042-Copy („Auch wir nicht") stand an **drei von drei Stellen aufgeweicht** im File (Standardtext, kein Ausrutscher) · Regel: **jede Zahl/Nummer/ID auslesen, nicht raten** |
 | **DL-065** | **„Konto" im teilnehmerseitigen Text verboten** (habify30 hat keins) · Magic Link = Schlüssel, kein Login · Glossar-Eintrag · Sprachregel `kado-content-voice` |
+| **DL-077** | **Figma-Split**: DS als publizierte Team-Library (`jO1gy…`), Screens im neuen File `habify30 Screens` (`3U4mfB…`), das konsumiert · Cleanup gegen KONV-figma · `— FRAMES —`-Referenzen historisch · Skill `habify30-figma` abgelöst |
+| **DL-078** | **Sechs UX-Kriterien** verbindlich (Handlungsbezug · Weglass-Test · kein Erklärungsbedarf · eine Handlung/Seite · Mobile first · Kontext-Reinheit) |
 
 **Wichtig:** Rot ist ausschließlich für Fehler reserviert. Eine Frist ist kein Fehler (DL-052).
 
