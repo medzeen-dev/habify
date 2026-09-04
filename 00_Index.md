@@ -177,10 +177,9 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 
 1. **Thema identifizieren** (z. B. „Peergruppen-Anmeldung bauen")
 2. **Hier nachsehen**, welche DL-Nummern es berühren → DL-035, DL-036, DL-037
-3. **Gezielt lesen**, nicht das ganze Dokument:
-   ```
-   awk '/^# DL-036/,/^# DL-037/' 09_Decision_Log.md
-   ```
+3. **Gezielt lesen**: die betroffene Datei öffnen, `decisions/DL-036_*.md` (ein File je Eintrag seit DL-080).
 4. **Erst dann bauen.**
 
-**Warnung:** `09_Decision_Log.md` ist ~125.000 Zeichen. Beim Lesen am Stück wird er bei ~38.500 Zeichen stillschweigend abgeschnitten, und die Trunkierungskante sieht aus wie ein beschädigtes Dokument. Nicht am Stück lesen.
+Die Einträge liegen einzeln unter [`decisions/`](decisions/); die frühere
+Am-Stück-Trunkierungswarnung entfällt (kein Monolith mehr). `09_Decision_Log.md` ist nur noch
+Einstieg + stehende Abschnitte.

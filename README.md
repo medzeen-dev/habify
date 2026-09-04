@@ -32,7 +32,7 @@ Before proposing product changes, writing content or building anything:
 1. **`00_Index.md`** — topic index to the Decision Log. Look up which DL entries touch the topic at hand. Only then build. This step is not optional; the index exists because it was once skipped.
 2. **`13_AI_Working_Context.md`** — judgement criteria for product proposals: behavioural hypothesis before feature, simplicity as a design goal, architecture versus implementation, evidence tiers.
 3. **`Working_with_Matthias.md`** — working style, tone and decision patterns of the primary product designer.
-4. **`09_Decision_Log.md`** — read selectively, never in one pass. At roughly 125,000 characters it is silently truncated when read whole. Access it through the index, section by section.
+4. **`decisions/`** — one file per Decision Log entry (`DL-NNN_<slug>.md`, since DL-080). Open the specific entries the index points to. `09_Decision_Log.md` is now only the entry point plus the standing sections (Principles, Confidence).
 
 `CLAUDE.md` in the repository root holds the working rules for the repository itself — governance, boundaries, what does not belong here. It is loaded automatically by Claude Code; on other surfaces this README is the entry point.
 
@@ -278,8 +278,8 @@ This repository is organised into independent knowledge domains.
   Content principles and interaction design.
 * `08_Research.md`
   Scientific foundations.
-* `09_Decision_Log.md`
-  Major product decisions and rationale. Read through the index, never whole.
+* `decisions/` (`09_Decision_Log.md` = entry point + standing sections)
+  Major product decisions and rationale — one file per entry (`DL-NNN_<slug>.md`). Reach them through the index.
 * `10_Rejected_Ideas.md`
   Ideas intentionally not pursued.
 * `11_Open_Questions.md`
