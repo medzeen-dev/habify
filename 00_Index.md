@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-04 (Decision Log bei DL-080)
+**Stand:** 2026-09-04 (Decision Log bei DL-081)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -27,8 +27,9 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-057** | Recovery-Pfad: `/recover` zuerst (liefert `pid` mit), danach `accesscontrol(pid)` · Rate-Limit auf `/recover` nicht optional |
 | **DL-058** | `accesscontrol` Response-Shape erweitert: `reason`, `expiryDate`, `programmName`, `contactEmail` |
 | **DL-059** | uid-Erzeugung von der Impulsphase nach **Wizard Schritt 2** verschoben · Schritt 2 muss idempotent sein · Seat-Zählung ab jetzt: Wizard-Abschlüsse |
+| **DL-081** | **State-/Speicher-Vertrag:** ein gebündelter `localStorage`-Store `h30.state` (pid, userId, recoveryCode, wizardCompleted, language, reservierte `progress`/`ui`) mit `schemaVersion` · Autoritätsmodell (localStorage = Gerätewahrheit, Catalyst = Backend) · Server-Antwort-Shapes (accesscontrol/register/recover) · sensible Zonen (Coach-RAM DL-072, Themenlabels server/uid DL-073) außerhalb des Stores |
 
-**Vor dem Bau von:** Einstieg, Einstieg Code eingeben, Fehlerseite, Wizard, Einstellungen, Gerät verknüpfen, Recovery-Screens.
+**Vor dem Bau von:** Einstieg, Einstieg Code eingeben, Fehlerseite, Wizard, Einstellungen, Gerät verknüpfen, Recovery-Screens. **DL-081 ist Pflichtlektüre für jeden Screen, der Identität, Fortschritt oder das Capabilities-Objekt anfasst.**
 
 ---
 
@@ -140,8 +141,9 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 |---|---|
 | **DL-068** | **Catalyst Slate** als Frontend-Host (ersetzt Web Client Hosting) · SPA-Routing HTTP 200 · Root-Base-Path · Static-Framework · mehrere Apps/Projekt · Cache `max-age=31536000` auf Shell-HTML (Hash-Assets nötig) · korrigiert DL-028 |
 | **DL-069** | **Native ZCQL-Aggregation** trägt das Dashboard · GROUP BY / AVG / SUM / COUNT / korrelierte Subqueries bestätigt · `COUNT(DISTINCT)` ignoriert DISTINCT still (Falle) · kein freier JOIN · OLAP nicht verfügbar · Insert_Rows cappt bei 200 |
+| **DL-081** | **State-/Speicher-Vertrag der Shell:** ein `localStorage`-Store `h30.state` (typisiert, `schemaVersion`) als Gerätewahrheit · Catalyst Data Store + Stratus als Backend · fixer Andockpunkt für das offene Capabilities-Objekt (OQ-028, additiv) · reservierte, aber offene Namespaces (`progress` gehört DL-076) |
 
-**Vor dem Bau von:** Dashboard-Queries (DISTINCT-Falle beachten), Shell-Deploy-Pipeline (Hash-Asset-Namen).
+**Vor dem Bau von:** Dashboard-Queries (DISTINCT-Falle beachten), Shell-Deploy-Pipeline (Hash-Asset-Namen), **jedem Screen mit Client-State (DL-081)**.
 
 ---
 
