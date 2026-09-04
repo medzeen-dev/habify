@@ -55,6 +55,11 @@ Diese Datei wird von Claude Code über den Pfad geladen, nicht über Retrieval
 
 Ändert sich die Leseordnung, ist sie in `README.md` zu ändern — nicht hier.
 
+## Skills
+
+habify-Skills leben versioniert im Repo unter `skills/<name>/SKILL.md` (Quelle der Wahrheit;
+UI-Upload ist nur Deployment). Nur technisches Frontmatter, kein Kado-Schema. Siehe DL-079.
+
 ## Skripte
 
 `kanon-pr.py` wird für dieses Repo nicht verwendet — es gibt kein Gate, das einen
