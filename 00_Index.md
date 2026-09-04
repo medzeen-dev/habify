@@ -119,7 +119,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-001** bis **DL-018** | Transfer statt Lernen · B2B · ein Verhalten zur Zeit · beobachtbare Verhaltensweisen · Experimente statt Verpflichtungen · leichtgewichtige Reflexion · Alltag als Umsetzungsumgebung · niedrige Komplexität |
 | **DL-024** | Repository-Scope: Produktionsmaterial gehört dazu |
 | **DL-025** | Scope-Grenze ist **severity-basiert**, nicht typ-basiert |
-| **DL-079** | **habify-Skills im Repo** (`skills/<name>/SKILL.md`) als Quelle der Wahrheit · UI-Upload = Deployment · Familie: session-state, catalyst-probing folgen |
+| **DL-079** | **habify-Skills im Repo** (`skills/<name>/SKILL.md`) als Quelle der Wahrheit · UI-Upload = Deployment · Familie decision-propagation + session-state + catalyst-probing abgelegt |
 | **DL-080** | **DL-Log-Split**: ein File je Eintrag (`decisions/DL-NNN_<slug>.md`) + leichtes Frontmatter (status/supersedes) · Historie erhalten, kein Konsolidieren · Migration skript-gestützt + verifiziert |
 
 ---
