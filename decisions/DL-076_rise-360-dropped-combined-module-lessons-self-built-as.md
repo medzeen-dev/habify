@@ -34,6 +34,8 @@ Rise 360 is not used. The combined module's lessons (Impulsphase, Veränderungsw
 
 **Frontmatter schema:** lesson ID, title, phase, order, estimated duration, `next` (single lesson reference for now; the field format is chosen so it can later extend to multiple branches — e.g. `next: [lesson-a, lesson-b]` — without breaking the data model). Branching itself is explicitly **not built** now — flagged by Matthias as a possible future need, not a current one.
 
+> **Correction note (2026-09-05, DL-084):** block type 6 below (`Reflection`) no longer uses a Zoho Forms embed — lesson-flow reflections use **native in-shell inputs**, realigning with DL-070 and removing this exception. See DL-084. The rest of the block set is confirmed and extended by DL-083 (the full typed-block taxonomy, frontmatter, sectioned lesson frame, resume/completion, and data-driven loader that this entry left as open build-architecture tasks).
+
 **Block types** (initial set, to be confirmed and, per the Weglass-Test, possibly trimmed during build):
 1. `Heading` — section heading
 2. `Text` — body copy, Markdown (bold, lists, links)

@@ -134,6 +134,8 @@ Zu Beginn des Programms ist daher entscheidend, dass die Teilnehmenden erkennen,
 
 Das Programm ist bewusst modular aufgebaut und kombiniert unterschiedliche Lernmodalitäten zu einem klar strukturierten Gesamtsystem.
 
+> **Korrekturnotiz (2026-09-05, DL-076/DL-083/DL-084):** Für das kombinierte Modul ist Rise 360 abgelöst. Die Selbstlerneinheiten sind selbstgebaute **Markdown-Lektionen mit typisiertem Block-Renderer**, nativ in der Shell (kein Web Export, kein iframe) — Architektur in DL-083. Die **Lektions-Reflexion** läuft ebenfalls **nativ in der Shell** (DL-084), nicht mehr über ein Zoho-Forms-Formular; Zoho Forms bleibt nur für Ready Check und Peergruppen-E-Mail (DL-070). Die beiden Absätze unten beschreiben den historischen Rise/Zoho-Stand.
+
 **Selbstlerneinheiten (Rise 360 Web Export)**
 Die inhaltliche Grundlage des Programms bilden in Rise 360 erstellte Selbstlerneinheiten, ausgeliefert als selbstgehosteter Web Export (siehe DL-028; SCORM/LMS-Auslieferung nur noch als optionaler Custom Build). Sie dienen dem systematischen Erkenntnisgewinn auf inhaltlicher Ebene und sind so gestaltet, dass Teilnehmende die zentralen Konzepte eigenständig erschließen können.
 
@@ -169,7 +171,7 @@ Begrenzte Coaching-Slots (15 Minuten, punktuelle Klärung), aufgrund limitierter
 
 4. **Momentum-Phase** (30 Tage) — Aus deinem Plan wird Wirklichkeit. Aktionale Phase: Umsetzung, Selbststeuerung, Umgang mit Hindernissen.
 
-Impulsphase, Veränderungswerkstatt und Momentum-Phase laufen technisch als ein kombiniertes Rise-360-Web-Export-Modul (siehe DL-022, DL-028), getrennt vom Ready-Check-Modul (kostenpflichtig vs. frei — Produkt-/Lizenzgrenze, nicht technisches Gate).
+Impulsphase, Veränderungswerkstatt und Momentum-Phase laufen technisch als ein kombiniertes Rise-360-Web-Export-Modul (siehe DL-022, DL-028), getrennt vom Ready-Check-Modul (kostenpflichtig vs. frei — Produkt-/Lizenzgrenze, nicht technisches Gate). *(Korrekturnotiz: Rise 360 ist für das kombinierte Modul abgelöst — selbstgebaute Markdown-Lektionen nativ in der Shell, DL-076/DL-083. Die Produkt-/Lizenzgrenze zum freien Ready-Check-Modul bleibt.)*
 
 ---
 

@@ -599,6 +599,16 @@ DL-076 decides self-hosted MP4 over Vimeo (`?dnt=1`) or an EU CDN provider, reso
 
 ---
 
+## OQ-036
+
+### Physical source location of the lesson Markdown files (bundled static assets vs. runtime storage)
+
+DL-083 fixes the loader as data-driven and reading through a **source interface**, but deliberately leaves *where* the Markdown physically lives open. Two directions: (a) **bundled static assets** shipped with the Shell on Catalyst Slate — editing a lesson is then a code-free asset redeploy (no build, but still a deploy step); (b) **Catalyst Stratus / Data Store**, fetched at runtime — a true no-deploy content update, editable by an editorial path (console/tool). DL-076's "changing a lesson must not require a deploy cycle" points to (b), but this depends on a kado-infra call (where content is authored/published, who edits it, caching). The renderer is identical either way, so this does not block the block/renderer/frame build.
+
+**Status:** Open, deferred to a kado-infra decision. New from DL-083 (2026-09-05).
+
+---
+
 # Prioritisation
 
 Current priorities are considered to be:

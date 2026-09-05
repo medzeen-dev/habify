@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-05 (Decision Log bei DL-082)
+**Stand:** 2026-09-05 (Decision Log bei DL-084)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -65,7 +65,8 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | DL | Inhalt |
 |---|---|
 | **DL-030** | Shell-Architektur · Phasen-Freischaltung per Datum/Fortschritt, Shell-Routing erzwingt Gate *(Rise/iframe-Mechanik durch DL-076 ersetzt — Korrekturnotiz eingetragen)* |
-| **DL-076** | **Rise 360 abgelöst.** Lektionen selbstgebaut als Markdown + Frontmatter, Block-Renderer, kein iframe mehr · 12 Lektionen über 3 Phasen · Video: selbstgehostet MP4 · Aufwand ~2,5 PT · korrigiert DL-030. Ready Check von dieser Entscheidung nicht erfasst (offen) |
+| **DL-076** | **Rise 360 abgelöst.** Lektionen selbstgebaut als Markdown + Frontmatter, Block-Renderer, kein iframe mehr · 12 Lektionen über 3 Phasen · Video: selbstgehostet MP4 · Aufwand ~2,5 PT · korrigiert DL-030. Ready Check von dieser Entscheidung nicht erfasst (offen) · *Korrekturnotiz durch DL-084 (Reflection-Block nativ statt Zoho)* |
+| **DL-083** | **Page-Builder-Architektur:** 11 typisierte Blöcke (Heading/Text/Quote/Callout/Image/Table nativ/Split/Video/Reflection/Webinar/Divider) · Frontmatter + `summary` · Lektions-Rahmen sektioniert-mit-Weiter (Fallback One-Scroll, geteilter Renderer) · Resume auf Abschnitts-Index · Abschluss per Button ohne Reflexions-Kopplung (DL-060) · `progress`-Shape (füllt DL-081 §6) · Loader data-driven (Lektionszahl egal) · schließt DL-076-Bau-Tasks. Neue OQ: physische Markdown-Quelle |
 | **DL-032** | Markenauftritt teilt sich: Marketing = Kado-Submarke · Shell = eigenständig · *Korrekturnotiz durch DL-041* |
 | **DL-039** | Home-Tab als vierter, gleichrangiger Tab · **Standard-Landing-Tab bei jedem Rückbesuch** · Element-Inventar · *Korrekturnotizen durch DL-045 und DL-052* |
 | **DL-041** | Nav teilt sich nach Breakpoint: Desktop = volle Labels · Mobil = Burger · Kundenlogo-Slot · *Korrekturnotizen durch DL-044* |
@@ -92,6 +93,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-034** | **Mistral AI** als AI-Coach-Provider |
 | **DL-038** | Coaching-Booking-Flow: **Zoho Bookings** als alleinige Kalender-Autorität · eigener Bookings-Service pro `pid` · **server-side only** · *Korrekturnotiz durch DL-042* |
 | **DL-070** | **Native In-Shell-Inputs** ersetzen Zoho Forms als Default für Momentum-Reflexionen + Veränderungswerkstatt · Zoho Forms: nur Ready Check + Peergruppen-E-Mail · korrigiert DL-027 |
+| **DL-084** | **Lektions-Reflexion nativ** (Prompt + Textfeld, opt. 1–10-Skala), Backup nach Catalyst `FormSubmissions` · hebt DL-076-Zoho-Ausnahme auf, richtet den Reflection-Block an DL-070 aus · Zoho bleibt nur Ready Check + Peergruppe |
 
 ---
 
