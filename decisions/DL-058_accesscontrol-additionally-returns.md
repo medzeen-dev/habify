@@ -7,6 +7,8 @@ superseded_by: []
 ---
 # DL-058
 
+> **Correction note (2026-09-05, DL-082):** as built, `reason:"expired"` + `expiryDate` are driven by a single explicit `expiry_date` column on `AccessControl`, not DL-031's computed formula. The new columns are snake_case (`programm_name`/`contact_email`/`expiry_date`), mapped to the camelCase response fields here. See DL-082.
+
 ## Context
 
 DL-029 established: fail-closed, always HTTP 200, return only `valid: boolean`.

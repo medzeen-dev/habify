@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-04 (Decision Log bei DL-081)
+**Stand:** 2026-09-05 (Decision Log bei DL-082)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -142,6 +142,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-068** | **Catalyst Slate** als Frontend-Host (ersetzt Web Client Hosting) · SPA-Routing HTTP 200 · Root-Base-Path · Static-Framework · mehrere Apps/Projekt · Cache `max-age=31536000` auf Shell-HTML (Hash-Assets nötig) · korrigiert DL-028 |
 | **DL-069** | **Native ZCQL-Aggregation** trägt das Dashboard · GROUP BY / AVG / SUM / COUNT / korrelierte Subqueries bestätigt · `COUNT(DISTINCT)` ignoriert DISTINCT still (Falle) · kein freier JOIN · OLAP nicht verfügbar · Insert_Rows cappt bei 200 |
 | **DL-081** | **State-/Speicher-Vertrag der Shell:** ein `localStorage`-Store `h30.state` (typisiert, `schemaVersion`) als Gerätewahrheit · Catalyst Data Store + Stratus als Backend · fixer Andockpunkt für das offene Capabilities-Objekt (OQ-028, additiv) · reservierte, aber offene Namespaces (`progress` gehört DL-076) |
+| **DL-082** | **Build-Reconciliations** (erster Shell+Backend-Bau): CORS via **Authorized Domains** statt manueller Function-Header (korrigiert DL-029; Catalyst beantwortet OPTIONS am Gateway) · Ablauf über **eine `expiry_date`-Spalte** statt DL-031-Formel (verfeinert DL-058) · Ordner `Catalyst_Functions/` → `functions/` (CLI-Standard) · Spalten snake_case (`programm_name`/`contact_email`/`expiry_date`) |
 
 **Vor dem Bau von:** Dashboard-Queries (DISTINCT-Falle beachten), Shell-Deploy-Pipeline (Hash-Asset-Namen), **jedem Screen mit Client-State (DL-081)**.
 
