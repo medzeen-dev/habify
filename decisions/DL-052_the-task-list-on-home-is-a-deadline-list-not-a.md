@@ -7,6 +7,14 @@ superseded_by: []
 ---
 # DL-052
 
+> **Correction note (2026-09-06, DL-085):** completion is now wired. A completed
+> deadline-bound task **disappears** from the list (it no longer expires) — it is
+> **not** greyed out; the "Nothing greyed out" rule below stands. Completion is
+> driven by the saved native input via the `progress` namespace (DL-083 §6 / DL-085),
+> and the in-context confirmation lives in the input block's `Gespeichert` state, not
+> on Home. While a task is still listed, its Home entry deep-links into the phase's
+> input mask (section anchor, DL-083 §4). See DL-085.
+
 ## Decision
 
 The task list on Home is a **deadline list**, not a checklist. Tasks appear as soon as the course has explained their context — not when their deadline approaches. Tasks without a deadline carry no tag; tasks with one carry a date tag in brand colour, not red.

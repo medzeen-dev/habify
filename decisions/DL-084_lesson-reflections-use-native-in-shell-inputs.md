@@ -7,6 +7,12 @@ superseded_by: []
 ---
 # DL-084
 
+> **Note (2026-09-06, DL-085):** this native reflection block is generalised into
+> the `Eingabe` family — Zweck (`Reflexion` | `Webinar-Frage`) × Zustand (`Offen` |
+> `Gespeichert`), answers editable, with a data-use info affordance. Webinar-question
+> capture is thereby a native Tier-1 input (DL-071), working with or without the AI
+> coach. See DL-085.
+
 ## Lesson-flow reflections use native in-shell inputs, removing DL-076's Zoho-Forms exception (realigns with DL-070)
 
 ## Context

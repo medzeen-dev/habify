@@ -23,6 +23,8 @@ chat on 2026-09-05; it does not reopen DL-076's product decision.
 
 ## Decision
 
+> **Correction note (2026-09-06, DL-085):** the block set is expanded to **15** — `Steps`, `Accordion`, `Quellen`, `Empfehlungen` added, and the `Reflection` block generalised into the native `Eingabe` family (Zweck × Zustand). The completion semantics (§5) and `progress` shape (§6) are extended by DL-085 (input drafts/answers + a completion flag that drives the Home task list). See DL-085.
+
 ### 1. Block taxonomy (11 typed blocks)
 
 The Markdown renderer supports exactly these typed blocks. The Weglass-Test

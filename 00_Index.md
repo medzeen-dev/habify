@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-05 (Decision Log bei DL-084)
+**Stand:** 2026-09-06 (Decision Log bei DL-085)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -66,7 +66,8 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 |---|---|
 | **DL-030** | Shell-Architektur · Phasen-Freischaltung per Datum/Fortschritt, Shell-Routing erzwingt Gate *(Rise/iframe-Mechanik durch DL-076 ersetzt — Korrekturnotiz eingetragen)* |
 | **DL-076** | **Rise 360 abgelöst.** Lektionen selbstgebaut als Markdown + Frontmatter, Block-Renderer, kein iframe mehr · 12 Lektionen über 3 Phasen · Video: selbstgehostet MP4 · Aufwand ~2,5 PT · korrigiert DL-030. Ready Check von dieser Entscheidung nicht erfasst (offen) · *Korrekturnotiz durch DL-084 (Reflection-Block nativ statt Zoho)* |
-| **DL-083** | **Page-Builder-Architektur:** 11 typisierte Blöcke (Heading/Text/Quote/Callout/Image/Table nativ/Split/Video/Reflection/Webinar/Divider) · Frontmatter + `summary` · Lektions-Rahmen sektioniert-mit-Weiter (Fallback One-Scroll, geteilter Renderer) · Resume auf Abschnitts-Index · Abschluss per Button ohne Reflexions-Kopplung (DL-060) · `progress`-Shape (füllt DL-081 §6) · Loader data-driven (Lektionszahl egal) · schließt DL-076-Bau-Tasks. Neue OQ: physische Markdown-Quelle |
+| **DL-083** | **Page-Builder-Architektur:** typisierte Blöcke · Frontmatter + `summary` · Lektions-Rahmen sektioniert-mit-Weiter (Fallback One-Scroll, geteilter Renderer) · Resume auf Abschnitts-Index · Abschluss per Button ohne Reflexions-Kopplung (DL-060) · `progress`-Shape (füllt DL-081 §6) · Loader data-driven (Lektionszahl egal) · schließt DL-076-Bau-Tasks. Neue OQ: physische Markdown-Quelle · *Korrekturnotiz durch DL-085 (Block-Set 11→15, Eingabe-Familie)* |
+| **DL-085** | **Block-Set-Erweiterung + Wiring:** 15 Blöcke (neu: Steps, Accordion, Quellen, Empfehlungen) · Reflection → **Eingabe-Familie** (Zweck Reflexion/Webinar-Frage × Zustand Offen/Gespeichert, editierbar) · Webinar-Frage = native Tier-1-Eingabe (DL-071, mit/ohne KI) · Speichern → `progress` → Home-Aufgabe **verschwindet** (nicht ausgegraut, DL-052) + Deeplink · **Video-Untertitel Pflicht (BFSG)** · Quote-Anführungszeichen (2. Font zurückgestellt) · Tabs zurückgestellt |
 | **DL-032** | Markenauftritt teilt sich: Marketing = Kado-Submarke · Shell = eigenständig · *Korrekturnotiz durch DL-041* |
 | **DL-039** | Home-Tab als vierter, gleichrangiger Tab · **Standard-Landing-Tab bei jedem Rückbesuch** · Element-Inventar · *Korrekturnotizen durch DL-045 und DL-052* |
 | **DL-041** | Nav teilt sich nach Breakpoint: Desktop = volle Labels · Mobil = Burger · Kundenlogo-Slot · *Korrekturnotizen durch DL-044* |
@@ -76,7 +77,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-048** | **Ein hartes Datums-Gate:** nur Momentum · Impulsphase offen ab Einladung · Werkstatt fortschrittsbasiert |
 | **DL-049** | Vor-Start-Zustand entfällt · erste Impuls-Lektion trägt Programmüberblick und Peergruppen-Erklärung |
 | **DL-050** | Webinare: **empfohlen, nicht Pflicht** · keine Aufzeichnungen · Content muss ohne Webinare funktionieren |
-| **DL-052** | **Aufgabenliste = Fristenliste**, keine Checkliste · Aufgabe erscheint, wenn der Kurs den Kontext erklärt hat · kein Rot |
+| **DL-052** | **Aufgabenliste = Fristenliste**, keine Checkliste · Aufgabe erscheint, wenn der Kurs den Kontext erklärt hat · kein Rot · *Korrekturnotiz durch DL-085 (erledigte Aufgabe verschwindet — nicht ausgegraut; Speichern treibt es über `progress`, Deeplink in die Eingabemaske)* |
 | **DL-054** | Button-Property `ExternalIcon` für jeden Button, der die Shell verlässt · Lucide `external-link` 16px |
 | **DL-060** | Wizard Schritt 2: **beobachtete Handlung** statt Zwangswahl · PDF-Download oder mailto: schaltet „Weiter" frei · Kaskade `Wizard 2 — Hilfe` als letzter Ausweg |
 | **DL-061** | Home-Prompt-Bereich **entfällt ersatzlos** · kein aufgeschobener Zustand kann noch entstehen |
@@ -93,7 +94,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-034** | **Mistral AI** als AI-Coach-Provider |
 | **DL-038** | Coaching-Booking-Flow: **Zoho Bookings** als alleinige Kalender-Autorität · eigener Bookings-Service pro `pid` · **server-side only** · *Korrekturnotiz durch DL-042* |
 | **DL-070** | **Native In-Shell-Inputs** ersetzen Zoho Forms als Default für Momentum-Reflexionen + Veränderungswerkstatt · Zoho Forms: nur Ready Check + Peergruppen-E-Mail · korrigiert DL-027 |
-| **DL-084** | **Lektions-Reflexion nativ** (Prompt + Textfeld, opt. 1–10-Skala), Backup nach Catalyst `FormSubmissions` · hebt DL-076-Zoho-Ausnahme auf, richtet den Reflection-Block an DL-070 aus · Zoho bleibt nur Ready Check + Peergruppe |
+| **DL-084** | **Lektions-Reflexion nativ** (Prompt + Textfeld, opt. 1–10-Skala), Backup nach Catalyst `FormSubmissions` · hebt DL-076-Zoho-Ausnahme auf, richtet den Reflection-Block an DL-070 aus · Zoho bleibt nur Ready Check + Peergruppe · *erweitert durch DL-085 (Eingabe-Familie, Zustände)* |
 
 ---
 
