@@ -548,7 +548,9 @@ A wrongly specified delete button does more harm than its absence.
 
 Raised during the 2026-07-14 peer-group-pages session (DL-053). The enrolment form (DL-053 Page 1) requires an email address. Nothing prevents a participant from entering a colleague's address and enrolling them without consent. The consequences are lower than for the exit case (DL-036/DL-037): the affected person receives a group email they did not request, but is not silently removed from anything. Still: they receive an unexpected email with their name attached to a group — in a programme whose core is psychological safety, an unasked-for enrolment is an unacceptable outcome.
 
-The exit flow already has a confirmation email by design (DL-053, DL-037). The enrolment flow does not. **Does enrolment need a double opt-in — a confirmation email to the entered address before the enrolment is finalised?** Not decided.
+The exit flow already has a confirmation email by design (DL-053, DL-037). The enrolment flow does not. **Does enrolment need a double opt-in — a confirmation email to the entered address before the enrolment is finalised?**
+
+**Resolution (2026-09-07, DL-086): no.** Enrolment stays single-step (email + consent → on the list), with no confirmation email; only the exit flow confirms by email. The residual risk — a participant entering a colleague's address and enrolling them unasked — is explicitly accepted and documented, not solved (same treatment as DL-037's accepted residual risks). May be revisited if the risk materialises in practice.
 
 ---
 
@@ -606,6 +608,16 @@ DL-076 decides self-hosted MP4 over Vimeo (`?dnt=1`) or an EU CDN provider, reso
 DL-083 fixes the loader as data-driven and reading through a **source interface**, but deliberately leaves *where* the Markdown physically lives open. Two directions: (a) **bundled static assets** shipped with the Shell on Catalyst Slate — editing a lesson is then a code-free asset redeploy (no build, but still a deploy step); (b) **Catalyst Stratus / Data Store**, fetched at runtime — a true no-deploy content update, editable by an editorial path (console/tool). DL-076's "changing a lesson must not require a deploy cycle" points to (b), but this depends on a kado-infra call (where content is authored/published, who edits it, caching). The renderer is identical either way, so this does not block the block/renderer/frame build.
 
 **Status:** Open, deferred to a kado-infra decision. New from DL-083 (2026-09-05).
+
+---
+
+## OQ-037
+
+### ZeptoMail EU endpoint and DPA / sub-processor status for the peer-group operational emails
+
+DL-086 chose ZeptoMail (Zoho's transactional service) to send the peer-group operational emails (formation, exit confirmation, wait-pool, opt-in-growth), called server-to-server from a Catalyst Function. These emails carry participant email addresses (and, via the group email, the fact of group membership). Before production use, ZeptoMail's EU endpoint (`zeptomail.zoho.eu`) and its DPA / sub-processor status must be confirmed under the same treatment already applied to other EU sub-processors (cf. Catalyst_Platform_Capabilities.md, Cluster D — Mistral EU endpoint / GCP sub-processor). Backend/legal item; does not block the frontend pages.
+
+**Status:** Open, pending backend/legal confirmation. New from DL-086 (2026-09-07).
 
 ---
 

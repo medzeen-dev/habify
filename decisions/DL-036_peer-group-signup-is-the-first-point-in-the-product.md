@@ -7,6 +7,8 @@ superseded_by: []
 ---
 # DL-036
 
+> **Correction note (2026-09-07, DL-086):** The "real name (Klarname) is required" field is superseded — peer-group enrolment collects only the email address plus the consent checkbox, no name. DL-053's own field list already named only consent + domain/TLD validation, and the Figma design carries no name field; DL-036's own rationale (the name adds little disclosure beyond the corporate email) makes the drop consistent. Everything else in DL-036 — the active consent checkbox, email-domain validation against `allowedEmailDomains` + `manualDomainExceptions`, and the pid-only isolation — remains fully in force. See DL-086.
+
 ## Decision
 
 Peer-group signup is the first point in the product where a participant voluntarily discloses identifying information (real name, company email) and shares it with other participants. This runs as its own pid-only context, technically isolated from the uid-aware Shell — the fourth instance of the isolation pattern already established for Ready Check (DL-033) and used again for the Booking-Flow (DL-038) and the group-exit mechanism (DL-037). Consent is via an active checkbox. Email-domain validation is built.

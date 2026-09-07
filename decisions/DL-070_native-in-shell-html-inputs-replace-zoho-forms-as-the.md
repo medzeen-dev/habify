@@ -7,6 +7,8 @@ superseded_by: []
 ---
 # DL-070
 
+> **Correction note (2026-09-07, DL-086):** The peer-group half of the "Zoho Forms is retained for … peer-group email handling" scope is superseded. Peer-group enrolment/exit now use a native Catalyst data path (`/peer/enrol`, `/peer/exit-request`), and the operational emails are sent via ZeptoMail server-to-server — no Zoho Forms surface. The stated reason for keeping Zoho here ("operates outside the Shell's `localStorage` context") did not survive the build: a Catalyst Function takes the `pid` in the request body, not from `localStorage`. Zoho Forms now remains only for Ready Check. See DL-086.
+
 ## Decision
 
 Native in-shell HTML inputs replace Zoho Forms as the default mechanism for Momentum reflections and Veränderungswerkstatt inputs. Zoho Forms is retained only for Ready Check outcome submission and peer-group email handling.

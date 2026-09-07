@@ -40,11 +40,12 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-010** | Peer-Interaktion ist Teil der Transfer-Architektur |
 | **DL-011** | Peer-Strukturen bleiben unterstützend, nicht bewertend |
 | **DL-035** | Gruppenbildung: 2–3 Personen · Stichtag während der Werkstattphase · **vollständig zufällige Zuteilung** |
-| **DL-036** | **Anmeldung: Consent-Checkbox (Pflicht, aktiv) + E-Mail-Domain-Validierung.** `allowedEmailDomains` als **Array** (Konzerntöchter) · `manualDomainExceptions` für Externe. Erster Punkt im Produkt, an dem identifizierende Daten preisgegeben und mit anderen Teilnehmern geteilt werden |
+| **DL-036** | **Anmeldung: Consent-Checkbox (Pflicht, aktiv) + E-Mail-Domain-Validierung.** `allowedEmailDomains` als **Array** (Konzerntöchter) · `manualDomainExceptions` für Externe. Erster Punkt im Produkt, an dem identifizierende Daten preisgegeben und mit anderen Teilnehmern geteilt werden · *Korrekturnotiz durch DL-086 (kein Namensfeld — nur E-Mail + Consent)* |
 | **DL-037** | Selbst-Austritt aus der Gruppe · **verbleibende Mitglieder werden per E-Mail informiert** · *Korrekturnotiz durch DL-041* |
 | **DL-053** | **Drei eigenständige pid-only-Seiten** (Anmeldung · Austritt Schritt 1 · Austritt Schritt 2) · **Shell weiß nicht, ob jemand in einer Gruppe ist** · kein `peerGroupId`-Flag an der uid · Austrittsbestätigung per E-Mail nicht verhandelbar |
+| **DL-086** | **Bau der drei Seiten:** Datenweg **nativ (Catalyst), nicht Zoho Forms** · **ZeptoMail** für die operativen Mails · **Isolation = eigene Origin** (uid der Shell browserseitig unlesbar) · **kein Namensfeld**, **kein Double-Opt-In** · löst Peergruppen-Teil von DL-070 und Klarname aus DL-036 ab |
 
-**Vor dem Bau von:** allem, was mit Peergruppen zu tun hat. DL-036 ist die Falle — Consent und Domain-Validierung sind Pflicht, nicht optional. DL-053: Shell verlässt die uid bei allem Peergruppen-bezogenen.
+**Vor dem Bau von:** allem, was mit Peergruppen zu tun hat. DL-036 ist die Falle — Consent und Domain-Validierung sind Pflicht, nicht optional (Namensfeld hingegen entfällt, DL-086). DL-053: Shell verlässt die uid bei allem Peergruppen-bezogenen; DL-086 macht das zur Origin-Grenze und legt den nativen Datenweg (statt Zoho) fest.
 
 ---
 
@@ -90,11 +91,11 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 
 | DL | Inhalt |
 |---|---|
-| **DL-027** | Fillout → **Zoho Forms** · *Korrekturnotiz durch DL-070 (native In-Shell-Inputs als Default; Zoho Forms nur noch für Ready Check + Peergruppe)* |
+| **DL-027** | Fillout → **Zoho Forms** · *Korrekturnotiz durch DL-070 (native In-Shell-Inputs als Default) und DL-086 (Peergruppe nativ) → Zoho Forms nur noch für Ready Check* |
 | **DL-034** | **Mistral AI** als AI-Coach-Provider |
 | **DL-038** | Coaching-Booking-Flow: **Zoho Bookings** als alleinige Kalender-Autorität · eigener Bookings-Service pro `pid` · **server-side only** · *Korrekturnotiz durch DL-042* |
-| **DL-070** | **Native In-Shell-Inputs** ersetzen Zoho Forms als Default für Momentum-Reflexionen + Veränderungswerkstatt · Zoho Forms: nur Ready Check + Peergruppen-E-Mail · korrigiert DL-027 |
-| **DL-084** | **Lektions-Reflexion nativ** (Prompt + Textfeld, opt. 1–10-Skala), Backup nach Catalyst `FormSubmissions` · hebt DL-076-Zoho-Ausnahme auf, richtet den Reflection-Block an DL-070 aus · Zoho bleibt nur Ready Check + Peergruppe · *erweitert durch DL-085 (Eingabe-Familie, Zustände)* |
+| **DL-070** | **Native In-Shell-Inputs** ersetzen Zoho Forms als Default für Momentum-Reflexionen + Veränderungswerkstatt · Zoho Forms: nur Ready Check + Peergruppen-E-Mail · korrigiert DL-027 · *Peergruppen-Teil abgelöst durch DL-086 (nativ)* |
+| **DL-084** | **Lektions-Reflexion nativ** (Prompt + Textfeld, opt. 1–10-Skala), Backup nach Catalyst `FormSubmissions` · hebt DL-076-Zoho-Ausnahme auf, richtet den Reflection-Block an DL-070 aus · Zoho bleibt nur Ready Check (Peergruppe nativ ab DL-086) · *erweitert durch DL-085 (Eingabe-Familie, Zustände)* |
 
 ---
 
