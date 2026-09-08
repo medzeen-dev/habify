@@ -23,7 +23,7 @@ This document therefore distinguishes between:
 
 It should not invent implementation details that have not yet been decided.
 
-**Boundary.** Platform mechanics — what Zoho Catalyst can and cannot do, console paths, service models, configuration scoping, measured limits — belong in Catalyst_Platform_Capabilities.md, not here. This document carries only what follows from them for habify30, with a pointer to the relevant cluster. Concrete names, values and setup steps live in the habify-app repository.
+**Boundary (DL-088).** Platform mechanics — what Zoho Catalyst can and cannot do, console paths, service models, configuration scoping, measured limits — belong in Catalyst_Platform_Capabilities.md, not here. This document carries only what follows from them for habify30, with a pointer to the relevant cluster. Concrete names, values and setup steps live in the habify-app repository.
 
 ---
 
@@ -851,7 +851,7 @@ The next technical step should be defining the minimum viable system required to
 * Topic labels are self-chosen, coarse, predefined, uid-bound, subject to a separate Art. 9(2)(a) opt-in outside the Wizard (DL-073). Legal wording of the opt-in is not yet finalised (OQ-034).
 * An append-only deletion log for AI-coach Data Store entries is held in Catalyst Stratus (EU bucket), separate from the Data Store, survives Zoho-initiated restores (DL-074). Stratus requires a one-time console-initialisation per environment.
 * No combined-signal risk profiles are derived from participant data. This is a permanent architectural constraint (Canon C-020, DL-075).
-* Scheduled backend work runs through Catalyst Job Scheduling, not through a function trigger, and configuration values must be set on every function that reads them — both established during the peer-group build (see Catalyst_Platform_Capabilities.md Cluster E).
+* Scheduled backend work runs through Catalyst Job Scheduling, not through a function trigger, and configuration values must be set on every function that reads them — both established during the peer-group build (see Catalyst_Platform_Capabilities.md Cluster E; boundary rule DL-088).
 
 ## Working Assumptions
 

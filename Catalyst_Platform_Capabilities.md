@@ -4,7 +4,7 @@
 **Last Updated:** 2026-07-16
 **Scope:** Zoho Catalyst capabilities relevant to habify30, measured empirically in Development with synthetic data. Production is never touched during probing.
 
-This document records what Catalyst can and cannot do, with measured evidence. It is the reference for architecture decisions that depend on platform behaviour. No-Redundancy: the Decision Log references this document; decision rationale lives there, not here. The same cut applies to 15_Technical_Architecture.md: platform mechanics — console paths, service models, configuration scoping, measured limits — live here; 15_Tech carries only what follows from them for habify30, plus a pointer to the cluster. Execution detail (concrete names, values, setup steps) lives in the habify-app repository, not in the canon.
+This document records what Catalyst can and cannot do, with measured evidence. It is the reference for architecture decisions that depend on platform behaviour. No-Redundancy: the Decision Log references this document; decision rationale lives there, not here. The same cut applies to 15_Technical_Architecture.md (DL-088): platform mechanics — console paths, service models, configuration scoping, measured limits — live here; 15_Tech carries only what follows from them for habify30, plus a pointer to the cluster. Execution detail (concrete names, values, setup steps) lives in the habify-app repository, not in the canon.
 
 ---
 

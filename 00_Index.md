@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-08 (Decision Log bei DL-087)
+**Stand:** 2026-09-08 (Decision Log bei DL-088)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -127,6 +127,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-025** | Scope-Grenze ist **severity-basiert**, nicht typ-basiert |
 | **DL-079** | **habify-Skills im Repo** (`skills/<name>/SKILL.md`) als Quelle der Wahrheit · UI-Upload = Deployment · Familie decision-propagation + session-state + catalyst-probing abgelegt |
 | **DL-080** | **DL-Log-Split**: ein File je Eintrag (`decisions/DL-NNN_<slug>.md`) + leichtes Frontmatter (status/supersedes) · Historie erhalten, kein Konsolidieren · Migration skript-gestützt + verifiziert |
+| **DL-088** | **Dokumentgrenze:** Plattform-Mechanik (Konsolenwege, Servicemodelle, Scoping, gemessene Limits) gehört in `Catalyst_Platform_Capabilities.md` · `15_Technical_Architecture.md` trägt nur die **Folge für habify30** plus Cluster-Verweis · Decision Log das Warum · Ausführung (Namen, Werte, Setup-Schritte) in habify-app · Testfrage: *wäre der Satz auch wahr, wenn habify30 ein anderes Produkt wäre?* |
 
 ---
 
