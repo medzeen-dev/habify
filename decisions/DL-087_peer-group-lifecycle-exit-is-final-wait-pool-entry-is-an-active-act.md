@@ -56,6 +56,23 @@ interpretations.
   with the exit notification. Without this, a shrunken 3-group could never grow back,
   although DL-037 explicitly allows any 2-person group to open itself.
 
+- **Whoever enters the wait pool is told how matching works — by email.** Until now a
+  late joiner received **no email at all**: they enrolled after the cutoff, saw the
+  confirmation page and then heard nothing, although they had entered a waiting state
+  nobody had explained. That is precisely the silent non-assignment DL-026/DL-037 reject.
+  A **wait-pool information email** is therefore sent on pool entry — to late joiners
+  after enrolment and to a dissolved group's last member after the link click. It states:
+  that two waiting people are grouped as soon as a second one exists (no waiting for a
+  third), that an existing 2-person group opening up will take them in, that either way
+  they get their group's contact details by email immediately, that after 3 days unmatched
+  the system asks existing 2-person groups to open, and — explicitly — that **assignment
+  is not guaranteed** for the cycle (the residual risk DL-037 accepts; saying nothing
+  about it would be the silent variant the canon rejects). Unsubscribing stays possible
+  at any time.
+  **Rule:** the email is sent **only if the person is still waiting after the immediate
+  matching attempt** — otherwise someone matched in the same second would receive "you are
+  waiting" moments before "your group is set".
+
 - **DL-035's partition wording is corrected.** "Any cohort size ≥2 can be partitioned into
   groups of 2 and 3, **except a leftover of exactly 1**" is self-contradictory: for n ≥ 2
   the partition *always* works (n%3=0 → all 3s; n%3=2 → 3s + one 2; n%3=1 → 3s + **two**
@@ -83,7 +100,8 @@ cannot fire and a sentence that cannot be true, respectively — neither changes
 - **Email artifacts** for the feature, complete list: formation (DL-035, with opt-in link
   for 2-groups) · exit confirmation (DL-053) · exit notification to remaining members
   (DL-037; carries an opt-in link when the group has dropped to 2) · **group dissolved +
-  wait-pool link (new, this entry)** · async-match (a) two solos and (b) solo joins an
+  wait-pool link (new, this entry)** · **wait-pool information mail (new, this entry;
+  only when not immediately matched)** · async-match (a) two solos and (b) solo joins an
   open 2-group (DL-041 A5) · new-member-joined notification (DL-041 A4) · "not enough
   signups this cycle" (DL-037) · 3-day bundled broadcast (DL-037, retargeted here).
   Copy for all of them remains provisional pending review (DL-037 "flagged for build").
