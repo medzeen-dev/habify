@@ -852,6 +852,7 @@ The next technical step should be defining the minimum viable system required to
 * An append-only deletion log for AI-coach Data Store entries is held in Catalyst Stratus (EU bucket), separate from the Data Store, survives Zoho-initiated restores (DL-074). Stratus requires a one-time console-initialisation per environment.
 * No combined-signal risk profiles are derived from participant data. This is a permanent architectural constraint (Canon C-020, DL-075).
 * Scheduled backend work runs through Catalyst Job Scheduling, not through a function trigger, and configuration values must be set on every function that reads them — both established during the peer-group build (see Catalyst_Platform_Capabilities.md Cluster E; boundary rule DL-088).
+* CORS is configured in exactly one place, Authorized Domains, per environment — the backend functions carry no CORS logic at all, because a header set in the function duplicates the gateway's and is rejected by the browser (DL-089; see Catalyst_Platform_Capabilities.md Cluster E4). This holds in Development as well, which since DL-086's origin split is itself a cross-origin case.
 
 ## Working Assumptions
 

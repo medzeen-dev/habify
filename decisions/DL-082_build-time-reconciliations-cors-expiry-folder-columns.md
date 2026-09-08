@@ -7,6 +7,18 @@ superseded_by: []
 ---
 # DL-082
 
+> **Correction note (2026-09-08, DL-089):** §1's mechanism is confirmed — CORS runs through
+> Authorized Domains, not manual function headers. Two things about it are corrected. First,
+> the scope: §1 removes the manual headers **for Production** and describes Development as
+> having "no CORS at all" because of the Vite dev proxy. Since DL-086 gave the peer-group
+> pages their own origin, a deployed page in Development calls the backend cross-origin too —
+> the proxy covers `npm run dev`, not a deployed origin — so the rule applies to every
+> environment. Second, the reason: the manual headers are not merely redundant next to an
+> Authorized Domain, they are **incompatible** with one. The gateway stamps
+> `Access-Control-Allow-Origin` on the real response as well as answering the preflight, and
+> a browser rejects a response carrying two such headers even when both name the same origin.
+> A function-side allowlist is therefore not a fallback. §§2–4 are unaffected.
+
 ## Build-time reconciliations from the first Shell + backend build
 
 ## Context

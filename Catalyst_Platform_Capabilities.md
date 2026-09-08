@@ -1,7 +1,7 @@
 # Catalyst_Platform_Capabilities.md
 
 **Status:** Living document — updated as empirical measurements are taken.
-**Last Updated:** 2026-07-16
+**Last Updated:** 2026-09-08
 **Scope:** Zoho Catalyst capabilities relevant to habify30, measured empirically in Development with synthetic data. Production is never touched during probing.
 
 This document records what Catalyst can and cannot do, with measured evidence. It is the reference for architecture decisions that depend on platform behaviour. No-Redundancy: the Decision Log references this document; decision rationale lives there, not here. The same cut applies to 15_Technical_Architecture.md (DL-088): platform mechanics — console paths, service models, configuration scoping, measured limits — live here; 15_Tech carries only what follows from them for habify30, plus a pointer to the cluster. Execution detail (concrete names, values, setup steps) lives in the habify-app repository, not in the canon.
@@ -199,7 +199,7 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 
 ## Cluster E — Functions, Scheduling, and Configuration
 
-**Source:** Peer-group build, Development, 2026-09-07/08. Function `peer` (Advanced I/O), job pool `peerjobs`, crons `peerformation` and `peermatching`. See DL-086, DL-087.
+**Source:** Peer-group build, Development, 2026-09-07/08. Function `peer` (Advanced I/O), job pool `peerjobs`, crons `peerformation` and `peermatching`. See DL-086, DL-087, DL-089.
 
 ### E1 — Advanced-I/O functions are not cron-triggerable from the function itself
 
@@ -213,7 +213,7 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 
 **Finding:** Environment variables are configured under Functions → *(function)* → Configuration → Environment Variables and are scoped to that one function; a variable set on one function is invisible to another. A value two functions both read must be set on both. They are also per environment — Development and Production are separate sets, switched in the console's environment selector.
 
-**Evidence:** Catalyst console, Development, 2026-09-07/08: environment variables exist only under a function's own Configuration tab, with no project-level equivalent. Consequently `PEER_ORIGIN`, which both `peer` and `accesscontrol` read, is set on each of them separately.
+**Evidence:** Catalyst console, Development, 2026-09-07/08: environment variables exist only under a function's own Configuration tab, with no project-level equivalent, and the console's environment selector switches between two independent sets. (The example originally recorded here — `PEER_ORIGIN`, set on `peer` and `accesscontrol` alike — no longer applies: `accesscontrol` stopped reading that variable under DL-089. The scoping mechanic itself is unaffected.)
 
 ### E3 — Slate custom domains: where they live, and a broken value to avoid
 
@@ -226,6 +226,40 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 **SSL:** the final step requests a Zoho group certificate — free, mandatory (the app is not reachable on the domain without it), and auto-renewed. Documented as taking up to 48 hours; in our case the mapping flipped to *Domain Active* within seconds.
 
 **Evidence:** app `peerpages`, deployment `default`, mapped to `peer-dev.habify30.k-a-d-o.com` on 2026-09-08. Both DNS records were verified independently against Google DNS before each verification step; the finished domain serves the peer pages over HTTPS.
+
+### E4 — CORS: the gateway owns it outright, and a manual function header is a duplicate
+
+**Finding:** Registering an origin under **Authorized Domains** does not merely make the
+gateway answer the OPTIONS preflight (DL-082 §1) — the gateway also stamps
+`Access-Control-Allow-Origin` (plus `Vary: Origin` and `Access-Control-Allow-Credentials:
+true`) onto the **real** response. A function that sets the header itself therefore does not
+provide a fallback: the response carries **two** `Access-Control-Allow-Origin` headers, and a
+browser rejects that — **including when both headers name the same origin**. The two
+mechanisms cannot be combined at all; the gateway has to own CORS alone.
+
+The resulting failure is deceptive: the preflight succeeds (it never reaches the function), so
+the browser reports a CORS error on a request whose preflight visibly passed, which reads like
+a broken domain rather than a duplicated header.
+
+**Input format trap:** the Authorized Domains entry takes a **bare hostname**
+(`sub.example.com`). Passing an origin with a scheme is rejected outright — `https://…`
+returns `INVALID_INPUT`, "Invalid domain name or https:// found".
+
+**Evidence:** Development, 2026-09-08, `peer-dev.habify30.k-a-d-o.com` registered as an
+Authorized Domain while both functions still set their own headers. Measured with `curl` from
+outside the browser:
+
+- `OPTIONS /server/accesscontrol/` with that `Origin` → HTTP 200, a single
+  `Access-Control-Allow-Origin: https://peer-dev.habify30.k-a-d-o.com`, and **no**
+  `X-Catalyst-Function-*` headers — the function is never invoked.
+- `GET /server/accesscontrol/` with the same `Origin` → HTTP 200 carrying **both**
+  `Access-Control-Allow-Origin: https://peer-dev.habify30.k-a-d-o.com` (gateway) and
+  `access-control-allow-origin: https://habify30.k-a-d-o.com` (function), alongside
+  `X-Catalyst-Function-Name: accesscontrol`.
+- `POST /server/peer/…` → the same duplication, the function's value being `null`.
+
+This is also the platform's first measurement against a genuine third-party origin; earlier
+CORS statements were taken through the same-origin Vite dev proxy.
 
 ---
 
@@ -250,6 +284,8 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 - Advanced-I/O functions cannot be cron-triggered from their own Configuration tab; scheduled execution runs through the Job Scheduling service (Job Pool → Cron → Jobs), with the job pool's max count as the concurrency cap (Development, 2026-09-08).
 - Environment variables are scoped per function and per environment, not per project — a shared value must be set on every function that reads it (Development, 2026-09-08).
 - Slate custom domains are configured per deployment in the Slate app's Overview, not under Cloud Scale → Domain Mappings; ownership must be proven with the TXT variant, because the offered CNAME variant's value is malformed (Development, 2026-09-08).
+- An Authorized Domain makes the gateway stamp `Access-Control-Allow-Origin` on the real response as well as answer the preflight, so a function that also sets the header produces a duplicate that browsers reject even when the values are identical — CORS has to be configured in exactly one place (empirically measured against a real third-party origin, Development, 2026-09-08; E4, DL-089).
+- Authorized Domains entries are bare hostnames; a value carrying a `https://` scheme is rejected with `INVALID_INPUT` (Development, 2026-09-08).
 
 ## Working Assumptions
 
