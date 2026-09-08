@@ -104,5 +104,15 @@ cannot fire and a sentence that cannot be true, respectively — neither changes
   only when not immediately matched)** · async-match (a) two solos and (b) solo joins an
   open 2-group (DL-041 A5) · new-member-joined notification (DL-041 A4) · "not enough
   signups this cycle" (DL-037) · 3-day bundled broadcast (DL-037, retargeted here).
-  Copy for all of them remains provisional pending review (DL-037 "flagged for build").
+  Copy for all ten is **final as of 2026-09-08** (reviewed by Matthias), which closes
+  DL-037's "flagged for build" copy item. The readable mirror of all artifacts is
+  `functions/peer/EMAILS.md` in habify-app; the strings in `functions/peer/index.js`
+  are the technical source of truth.
+- **Common mail frame** for all of the above, applied centrally at the send layer rather
+  than written into each artifact: every subject is prefixed with the cohort's
+  `programm_name`, every mail carries a footer naming `contact_email` as the route for
+  questions, and the sender is the noreply address `noreply.habify30@k-a-d-o.com`. Both
+  cohort fields are read per `pid` from `AccessControl` (DL-058; `contactEmail` thereby
+  gets its first actual use), and both fail open — without them the mail still sends, just
+  without prefix and without footer. See 15_Technical_Architecture.md, Peer-Group section.
 - 11_Open_Questions.md: nothing opened or closed by this entry.

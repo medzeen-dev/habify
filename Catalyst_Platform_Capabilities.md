@@ -4,7 +4,7 @@
 **Last Updated:** 2026-07-16
 **Scope:** Zoho Catalyst capabilities relevant to habify30, measured empirically in Development with synthetic data. Production is never touched during probing.
 
-This document records what Catalyst can and cannot do, with measured evidence. It is the reference for architecture decisions that depend on platform behaviour. No-Redundancy: the Decision Log references this document; decision rationale lives there, not here.
+This document records what Catalyst can and cannot do, with measured evidence. It is the reference for architecture decisions that depend on platform behaviour. No-Redundancy: the Decision Log references this document; decision rationale lives there, not here. The same cut applies to 15_Technical_Architecture.md: platform mechanics — console paths, service models, configuration scoping, measured limits — live here; 15_Tech carries only what follows from them for habify30, plus a pointer to the cluster. Execution detail (concrete names, values, setup steps) lives in the habify-app repository, not in the canon.
 
 ---
 
@@ -197,6 +197,24 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 
 **Minimal-payload discipline (H5):** Only the minimum context required for the current exchange is sent to the Mistral endpoint. No uid, no pid, no topic label is sent in the payload — only the framed reflection content and behavioural goal within the user-carried session context.
 
+## Cluster E — Functions, Scheduling, and Configuration
+
+**Source:** Peer-group build, Development, 2026-09-07/08. Function `peer` (Advanced I/O), job pool `peerjobs`, crons `peerformation` and `peermatching`. See DL-086, DL-087.
+
+### E1 — Advanced-I/O functions are not cron-triggerable from the function itself
+
+**Finding:** An Advanced-I/O function's own Configuration tab offers only the API Gateway as a trigger — there is no cron option there. Scheduled execution runs through the separate **Job Scheduling** service (console → Job Scheduling), model *Job Pool → Cron → Jobs*: a job pool of type *Webhook* receives the schedule's jobs, and each cron POSTs to a route of the function. The job pool's *max count* is the concurrency cap — set to 1, it guarantees two scheduled sweeps can never overlap.
+
+**Evidence:** Both peer crons were configured this way in Development (`peerformation` `0 3 * * *`, `peermatching` `0 * * * *`, Europe/Berlin) and each returned HTTP 200 when triggered manually via *Submit Job*. That the scheduler fires on its own schedule has not been observed yet — see Open Questions.
+
+**Secret handling:** the admin key travels in the cron's JSON body, never in its query string (the *Parameters* toggle stays off), so it appears in no URL or request log.
+
+### E2 — Environment variables are scoped per function, not per project
+
+**Finding:** Environment variables are configured under Functions → *(function)* → Configuration → Environment Variables and are scoped to that one function; a variable set on one function is invisible to another. A value two functions both read must be set on both. They are also per environment — Development and Production are separate sets, switched in the console's environment selector.
+
+**Evidence:** Catalyst console, Development, 2026-09-07/08: environment variables exist only under a function's own Configuration tab, with no project-level equivalent. Consequently `PEER_ORIGIN`, which both `peer` and `accesscontrol` read, is set on each of them separately.
+
 ---
 
 # Confidence
@@ -217,6 +235,8 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 - The AI-coach deletion log lives in Catalyst Stratus (EU bucket), separate from Data Store, survives Zoho restores (DL-074).
 - Stratus initialisation requires a one-time interactive console session; the MCP cannot do it autonomously.
 - Profiling guardrail: no combined-signal risk profiles are derived from participant data (Canon C-020, DL-075).
+- Advanced-I/O functions cannot be cron-triggered from their own Configuration tab; scheduled execution runs through the Job Scheduling service (Job Pool → Cron → Jobs), with the job pool's max count as the concurrency cap (Development, 2026-09-08).
+- Environment variables are scoped per function and per environment, not per project — a shared value must be set on every function that reads it (Development, 2026-09-08).
 
 ## Working Assumptions
 
@@ -229,3 +249,4 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 - Catalyst backup restore granularity, RTO/RPO, and whether deleted rows are retained in snapshots — awaiting written support response.
 - Stratus-specific DR behaviour (whether it falls under the same backup cycle as Data Store).
 - Whether Mistral's GCP sub-processor US footprint is compatible with EU-Residency requirements for habify30 participant data (OQ-033).
+- Whether a Job Scheduling cron actually fires on its configured schedule — both peer crons have so far only been triggered manually via *Submit Job* (E1).
