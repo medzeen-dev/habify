@@ -215,6 +215,18 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 
 **Evidence:** Catalyst console, Development, 2026-09-07/08: environment variables exist only under a function's own Configuration tab, with no project-level equivalent. Consequently `PEER_ORIGIN`, which both `peer` and `accesscontrol` read, is set on each of them separately.
 
+### E3 — Slate custom domains: where they live, and a broken value to avoid
+
+**Finding:** A Slate app's custom domain is configured **in the deployment's Overview screen** (Slate → app → deployment → *Domain Mapping* → *Add Domain*), not under Cloud Scale → *Domain Mappings* — that page offers only *Project Domain* and *AppSail domain* and has no Slate target at all. The wizard runs Add Domain → Verify Ownership → Apply Domain.
+
+**Ownership record — use TXT, not CNAME.** Step 1 offers two interchangeable formats. The **CNAME variant is malformed**: its data value ends `…validation.nimbus.` — a fully-qualified name under a TLD that does not exist, so it can never resolve or verify. The **TXT variant is complete and works**: host `<subdomain>`, value `zoho-nimbus-<base64>=`. The TXT record must be **deleted after step 1 and before step 2**, because step 2 needs a CNAME on the same name and a CNAME tolerates no sibling record (the console states this).
+
+**Address shapes:** a Slate app's default URL is `<app>-<hash>.onslate.eu`; the step-2 mapping CNAME points at `slate-<deployment-id>-eu.nimbuspop.com`.
+
+**SSL:** the final step requests a Zoho group certificate — free, mandatory (the app is not reachable on the domain without it), and auto-renewed. Documented as taking up to 48 hours; in our case the mapping flipped to *Domain Active* within seconds.
+
+**Evidence:** app `peerpages`, deployment `default`, mapped to `peer-dev.habify30.k-a-d-o.com` on 2026-09-08. Both DNS records were verified independently against Google DNS before each verification step; the finished domain serves the peer pages over HTTPS.
+
 ---
 
 # Confidence
@@ -237,6 +249,7 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 - Profiling guardrail: no combined-signal risk profiles are derived from participant data (Canon C-020, DL-075).
 - Advanced-I/O functions cannot be cron-triggered from their own Configuration tab; scheduled execution runs through the Job Scheduling service (Job Pool → Cron → Jobs), with the job pool's max count as the concurrency cap (Development, 2026-09-08).
 - Environment variables are scoped per function and per environment, not per project — a shared value must be set on every function that reads it (Development, 2026-09-08).
+- Slate custom domains are configured per deployment in the Slate app's Overview, not under Cloud Scale → Domain Mappings; ownership must be proven with the TXT variant, because the offered CNAME variant's value is malformed (Development, 2026-09-08).
 
 ## Working Assumptions
 
