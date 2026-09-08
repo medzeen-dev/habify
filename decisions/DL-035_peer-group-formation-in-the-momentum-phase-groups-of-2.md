@@ -7,6 +7,8 @@ superseded_by: []
 ---
 # DL-035
 
+> **Correction note (2026-09-08, DL-087):** The Group-size bullet's parenthesis — "any cohort size ≥2 can be partitioned into groups of 2 and 3, **except a leftover of exactly 1**" — is self-contradictory and is corrected here. For n ≥ 2 the partition **always** works: n%3=0 → all 3s; n%3=2 → 3s plus one 2; n%3=1 → 3s plus **two** 2s (4 = 2+2, 7 = 3+2+2, …). A remainder of exactly 1 cannot arise from partitioning. The single-person situation is not a partition remainder but (a) a cohort with exactly one signup and (b) a single solo waiting in the pool — both governed by DL-037. Read as written, the sentence invites a build branch for a case that can never occur. See DL-087.
+
 ## Decision
 
 Peer-group formation in the Momentum Phase: groups of 2–3, formed at a fixed cutoff date during the Veränderungswerkstatt, fully random assignment, no matching criteria of any kind. Communication happens entirely outside the habify30 system, via a channel the group chooses for itself (e.g. WhatsApp, MS Teams).

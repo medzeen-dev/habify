@@ -7,6 +7,16 @@ superseded_by: []
 ---
 # DL-037
 
+> **Correction note (2026-09-08, DL-087):** Three precisions from reading the lifecycle end to end while building the wait pool:
+>
+> **Exit is a full exit.** "The exiting participant enters a shared wait pool" is superseded — confirming the exit removes the address from the signup list and does **not** re-match the participant. Re-entry is an active new enrolment. Silently re-matching someone who just left would re-disclose their address to a circle they never asked for, against the DL-036 consent ("the other members of **my** peer group"); DL-053's confirmation-page copy already assumed this reading. The wait pool therefore holds only late joiners and members of a dissolved group who opted back in.
+>
+> **A group that drops to a single member is dissolved.** DL-037 said only that remaining members are notified; it left a 2-person group shrinking to 1 — a size DL-035 does not allow — unaddressed. Such a group is dissolved and its last member gets its own email with a **link** to enter the wait pool (their click, not an automatism). A 3-person group dropping to 2 stays a group and receives an opt-in link with the exit notification, since it never got one at formation.
+>
+> **The 3-day broadcast targets 2-person groups that are NOT yet open.** "Currently-open 2-person groups" is near-vacuous — an open group is filled automatically as soon as a solo exists. The broadcast exists to move *further* groups to open up. Bundling (one per cohort, never one per waiting person) is unchanged.
+>
+> See DL-087.
+
 > **Correction note (2026-07-13, DL-041):** Three precisions to DL-037, decided in the 2026-07-13 UX/Figma session:
 >
 > **(A3) Opt-in-growth link is a toggle, not a one-way flag.** The link in the original group-formation email toggles the open-to-new-members state in both directions — clicking once opens the 2-person group to new members, clicking again closes it. DL-037 described only the opening direction.
