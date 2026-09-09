@@ -550,7 +550,13 @@ Raised during the 2026-07-14 peer-group-pages session (DL-053). The enrolment fo
 
 The exit flow already has a confirmation email by design (DL-053, DL-037). The enrolment flow does not. **Does enrolment need a double opt-in — a confirmation email to the entered address before the enrolment is finalised?**
 
-**Resolution (2026-09-07, DL-086): no.** Enrolment stays single-step (email + consent → on the list), with no confirmation email; only the exit flow confirms by email. The residual risk — a participant entering a colleague's address and enrolling them unasked — is explicitly accepted and documented, not solved (same treatment as DL-037's accepted residual risks). May be revisited if the risk materialises in practice.
+~~**Resolution (2026-09-07, DL-086): no.** Enrolment stays single-step (email + consent → on the list), with no confirmation email; only the exit flow confirms by email. The residual risk — a participant entering a colleague's address and enrolling them unasked — is explicitly accepted and documented, not solved (same treatment as DL-037's accepted residual risks). May be revisited if the risk materialises in practice.~~
+
+**Resolution (2026-09-09, DL-090): yes — this supersedes the 2026-09-07 answer.** An address reaches the list only after its owner clicks the link in a confirmation email; the confirmation link is valid for 7 days and unconfirmed rows are deleted.
+
+What changed is not the judgement on the risk above, which stands: the colleague case really is self-correcting. What changed is that the question was framed too narrowly. It asks about *enrolling another person's address deliberately*. The case that decides it is a **typo in one's own** — a mistyped address can exist and belong to a stranger, who then receives the group-formation email carrying the other members' addresses. That is third-party personal data disclosed to an uninvolved person, and no amount of accepting the colleague risk covers it. It also blocks a seat that nobody can free, since the exit link goes to the mistyped address as well.
+
+The accepted cost is now the opposite one: whoever does not click is silently not in the group. The enrolment screen is written to counter exactly that (a step is outstanding, no allocation without it, check the spam folder).
 
 ---
 

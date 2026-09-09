@@ -7,6 +7,18 @@ superseded_by: []
 ---
 # DL-086
 
+> **Correction note (2026-09-09, DL-090):** the **"No enrolment double opt-in"** bullet is
+> superseded — enrolment now requires a confirmation email, and an address reaches the list
+> only after its owner clicks the link. The risk this entry weighed and accepted was
+> someone enrolling a colleague unasked, which is self-correcting. The case that forced the
+> reversal was not considered here: a **typo** in one's own address can land on an address
+> that exists and belongs to a stranger, who then receives the group-formation email —
+> carrying the other members' email addresses. That is third-party data disclosed to an
+> uninvolved person, against this entry's own rationale of reducing DPO exposure. It also
+> blocks a seat permanently, because the exit link goes to the mistyped address too. The
+> other three decisions here — native Catalyst data path, ZeptoMail, own-origin isolation,
+> no name field — are unaffected.
+
 ## Peer-group pages: native Catalyst data path (not Zoho Forms), ZeptoMail for the operational emails, own-origin isolation, no name field, no enrolment double opt-in
 
 ## Context

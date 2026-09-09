@@ -7,6 +7,14 @@ superseded_by: []
 ---
 # DL-068
 
+> **Correction note (2026-09-09, DL-091):** Slate stands as the frontend host; what is
+> superseded is the cache mitigation assumed here. Hash-based asset filenames do not make
+> Slate's one-year `cache-control` survivable — they protect the assets but not the
+> `index.html` that names them, so after a redeploy a returning browser loads cached HTML
+> pointing at a deleted bundle and renders a blank page (measured, Capabilities A5).
+> habify30 therefore runs every Slate deployment with caching **disabled** until the system
+> is stable, and the setting has to be in place before an environment's first visitor.
+
 ## Decision
 
 Catalyst Slate replaces Web Client Hosting as the frontend host for the habify30 Shell.

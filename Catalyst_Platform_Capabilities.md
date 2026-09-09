@@ -52,9 +52,22 @@ Contrast: Web Client Hosting imposed an undocumented `/app/` prefix on all paths
 | `/style.css` | 200 | text/css | public, max-age=31536000 | `64fd8203447f23b2311f08db0213bf94` |
 | `/probe.md` | 200 | text/markdown | public, max-age=31536000 | `72494dc4871bb1c8cd015fae6f94bcac` |
 
-**Consequence:** Shell HTML with a one-year cache means participants will not receive updates until their cache expires or is cleared. Standard mitigation: hash-based asset file names (Vite/Webpack handle this automatically; a vanilla build requires explicit implementation). Alternatively: deploy updates to a new Slate app URL.
+**Consequence:** participants do not receive updates until their cache expires or is cleared.
 
-**Open question:** Whether a `_headers`-equivalent configuration exists to override cache-control per file type — not confirmed; requires Catalyst documentation check or support ticket.
+**The hash-asset mitigation is NOT sufficient — measured 2026-09-09 (correction to the original entry).** Hashed filenames protect the assets but not `index.html`, and `index.html` is the file that *names* the assets. After a redeploy the sequence is: the browser still holds the year-old HTML → that HTML references the previous bundle → the deploy deleted it → **HTTP 404 → blank page**. Measured on the peer app: `index.html` served from cache pointing at `peer-Di0WNNGY.js`, which returned 404 while the freshly deployed `peer-UPNMPUkZ.js` returned 200. Not a stale page: an empty one, with nothing on screen to tell the user a cold reload would fix it. Deploying to a new app URL remains a real mitigation but is incompatible with a mapped custom domain.
+
+**The cache key is the full URL including the query string.** Measured: the same path with a different query returns a freshly fetched `index.html`. Practical effect — links carrying a per-recipient token (`/?token=…`, `/?ct=…`, `/?gt=…`, `/?pt=…`) are each their own cache entry and are therefore never stale; a shared entry URL such as `/?pid=<cohort>` is identical for everyone and is the exposed one.
+
+**Overriding the policy — resolved (2026-09-09), closing this entry's original open question.** There is no `_headers` file and no `slate-config.toml` key, but there *is* a console control, per deployment: Slate → app → deployment → **Configuration** → *General Settings* → **Cache**, offering **Disable** and **Flush**. Despite a description that suggests a server-side "cache segment", the toggle changes what the browser is sent:
+
+| Cache setting | `index.html` | hashed asset |
+|---|---|---|
+| Enabled (default) | `public, max-age=31536000` | `public, max-age=31536000` |
+| Disabled | `no-store` | `no-store` |
+
+It is binary — no per-path or per-type policy, so a short TTL for `index.html` alongside a long one for hashed assets is not expressible. **Flush** purges server-side only and cannot reach a browser cache.
+
+**Ordering trap:** `no-store` applies only to responses fetched *after* the change. A browser that already cached `index.html` under the one-year policy keeps it, and no later setting reaches it. The setting therefore has to be in place **before an environment's first visitor**, not after the first redeploy breaks something. See DL-091 for habify30's standing decision.
 
 ### A6 — Additional side findings
 
@@ -112,9 +125,13 @@ Contrast: Web Client Hosting imposed an undocumented `/app/` prefix on all paths
 
 ### B5 — Schema provisioning (MCP limitation)
 
-**Finding:** User columns cannot be created via MCP. `Create_Table` creates only an empty shell with 4 system columns (`ROWID`, `CREATORID`, `CREATEDTIME`, `MODIFIEDTIME`). No add-column tool exists in the MCP. `ALTER TABLE … ADD COLUMN` via ZCQL returns "Syntax error."
+**Finding — no longer true, corrected 2026-09-09.** `ALTER TABLE … ADD COLUMN` via ZCQL still returns "Syntax error", and `Create_Table` still creates only an empty shell with the 4 system columns (`ROWID`, `CREATORID`, `CREATEDTIME`, `MODIFIEDTIME`). But an add-column tool **does** exist in the MCP: `Create_Column`, addressed by table id, works.
 
-**Consequence:** User columns must be created once via the Catalyst console before any data pipeline work. This is a one-time manual setup step per table, not a recurring constraint.
+**Input trap:** the schema advertises a `description` field, and sending it fails the whole call with `PATTERN_NOT_MATCHED`. Omit it. Sending one column per call is also more reliable than batching several.
+
+**Evidence:** `confirm_token` (text) and `confirm_token_expiry` (datetime) added to `PeerSignups` in Development, 2026-09-09, each in its own call without `description`, both immediately usable (DL-090).
+
+**Consequence:** provisioning user columns is no longer a manual console step, so a schema change no longer interrupts a piece of work. The original entry's "one-time manual setup step per table" no longer applies.
 
 ### B6 — `Insert_Rows` row limit
 
@@ -270,11 +287,11 @@ CORS statements were taken through the same-origin Vite dev proxy.
 - Slate serves SPA deep-links at HTTP 200 (empirically measured, Development, 2026-07-16).
 - Slate serves from root base-path `/` with no prefix (empirically measured).
 - Slate auto-detects Static framework; no build step required for vanilla HTML/JS/CSS.
-- Slate applies `cache-control: public, max-age=31536000` to all resources including shell HTML (empirically measured). Shell updates require hash-based asset names or a new app URL.
+- Slate applies `cache-control: public, max-age=31536000` to all resources including shell HTML (empirically measured). **Hash-based asset names do not mitigate this** — they protect the assets, not the `index.html` that names them, so a redeploy leaves returning browsers on a blank page (measured 2026-09-09, A5). Caching can be disabled per deployment in the console, which flips the header to `no-store`; it must be disabled before an environment's first visitor (DL-091).
 - Native ZCQL `GROUP BY`/`AVG`/`SUM`/`COUNT`/subqueries are correct and sufficient at habify30's volumes (empirically measured).
 - `COUNT(DISTINCT)` silently ignores DISTINCT in ZCQL (empirically measured, correctness trap).
 - Free JOINs are not supported in ZCQL; correlated subqueries are a working workaround (empirically measured).
-- User columns must be created via the Catalyst console (MCP cannot provision schema DDL).
+- User columns can be created via MCP with `Create_Column` (corrected 2026-09-09 — the `description` field must be omitted); ZCQL `ALTER TABLE` remains unsupported.
 - `Insert_Rows` caps at 200 rows per call.
 - Coach conversation content is never stored by Kado — user-carried session memory only (architectural decision, DL-072).
 - Topic labels are uid-bound and stored in Catalyst Data Store under a separate Art. 9(2)(a) opt-in (DL-073).
@@ -294,7 +311,7 @@ CORS statements were taken through the same-origin Vite dev proxy.
 
 ## Open Questions
 
-- Whether Slate's cache-control can be overridden per file type via a `_headers`-equivalent configuration.
+- Whether Slate will offer a per-path or per-type cache policy. Today the control is binary per deployment (A5); the granular policy one actually wants — short for `index.html`, long for hashed assets — is not expressible, which is why DL-091 runs with caching off entirely.
 - Catalyst backup restore granularity, RTO/RPO, and whether deleted rows are retained in snapshots — awaiting written support response.
 - Stratus-specific DR behaviour (whether it falls under the same backup cycle as Data Store).
 - Whether Mistral's GCP sub-processor US footprint is compatible with EU-Residency requirements for habify30 participant data (OQ-033).

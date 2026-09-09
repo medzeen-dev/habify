@@ -853,6 +853,8 @@ The next technical step should be defining the minimum viable system required to
 * No combined-signal risk profiles are derived from participant data. This is a permanent architectural constraint (Canon C-020, DL-075).
 * Scheduled backend work runs through Catalyst Job Scheduling, not through a function trigger, and configuration values must be set on every function that reads them — both established during the peer-group build (see Catalyst_Platform_Capabilities.md Cluster E; boundary rule DL-088).
 * CORS is configured in exactly one place, Authorized Domains, per environment — the backend functions carry no CORS logic at all, because a header set in the function duplicates the gateway's and is rejected by the browser (DL-089; see Catalyst_Platform_Capabilities.md Cluster E4). This holds in Development as well, which since DL-086's origin split is itself a cross-origin case.
+* Peer-group enrolment is a **double opt-in**: an address reaches the list only after its owner confirms it by email, and can never be allocated a seat before (DL-090, superseding DL-086 on this point). The reversal is driven by the typo case — a mistyped address can belong to a stranger who would then receive the other members' addresses.
+* Every habify30 Slate deployment runs with **caching disabled** until the system is stable (DL-091). Slate's default one-year `cache-control` covers `index.html` too, and hash-based asset names do not mitigate it — see Catalyst_Platform_Capabilities.md A5. The setting must be applied before an environment's first visitor.
 
 ## Working Assumptions
 
