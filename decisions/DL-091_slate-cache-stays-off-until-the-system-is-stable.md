@@ -43,8 +43,22 @@ under the old policy keeps it, and no later setting reaches it. For Production t
 disabling the cache *before the first invitation goes out*, not after the first redeploy
 breaks something.
 
-Revisiting this is expected once deploys become rare, and is a separate decision. The
-mechanics are in `Catalyst_Platform_Capabilities.md` A5.
+**The trigger for switching it back on is the first customer test** (fixed 2026-09-09, one
+day after this entry — "until the system is stable" was the original wording and is not a
+condition anyone can check). At that point the deploy cadence drops and a returning visitor
+stops meeting a new build every few hours.
+
+**Precondition, and it is a hard one:** the stale-cache guard must already be live in the
+deployed HTML *before* caching is switched on. The guard is an inline script in
+`index.html`; switching the cache on first would freeze guard-less HTML into browsers for a
+year — exactly the version that cannot catch the failure. Deploy, then switch.
+
+Even with the guard, caching is not free: because a deploy deletes the previous assets,
+there is no "old but still working" state. Every returning browser meets the guard after
+every deploy and has to click through it. That is friction rather than risk — and it is the
+reason the switch waits for the cadence to drop rather than happening now.
+
+The mechanics are in `Catalyst_Platform_Capabilities.md` A5.
 
 ## Rationale
 
@@ -82,6 +96,12 @@ visited *before* the change, which never includes the person testing the deploy.
 - **DL-068:** correction note — Slate stands as the host; the cache mitigation named there
   is superseded.
 - `15_Technical_Architecture.md`: one consequence line pointing at A5.
-- **habify-app:** no code change. The fix is a deployment setting, not a build change —
-  the inlining workaround that was drafted is not needed.
+- **habify-app:** no build change is needed for the setting itself — the fix is a
+  deployment setting, and the inlining workaround that was drafted is not needed. What was
+  built is the **stale-cache guard**: an inline script in `index.html` and `peer.html` that
+  catches the failed bundle load (and a failed dynamic import, which emits a rejected
+  promise rather than a resource error) and offers a reload that appends a cache-busting
+  query parameter, because the cache key is the full URL and `location.reload()` can be
+  answered from the same entry. It only helps browsers whose cached HTML already contains
+  it — from the next deploy onward, never retroactively.
 - `00_Index.md` updated.
