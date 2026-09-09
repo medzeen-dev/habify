@@ -621,9 +621,19 @@ DL-083 fixes the loader as data-driven and reading through a **source interface*
 
 ### ZeptoMail EU endpoint and DPA / sub-processor status for the peer-group operational emails
 
-DL-086 chose ZeptoMail (Zoho's transactional service) to send the peer-group operational emails (formation, exit confirmation, wait-pool, opt-in-growth), called server-to-server from a Catalyst Function. These emails carry participant email addresses (and, via the group email, the fact of group membership). Before production use, ZeptoMail's EU endpoint (`zeptomail.zoho.eu`) and its DPA / sub-processor status must be confirmed under the same treatment already applied to other EU sub-processors (cf. Catalyst_Platform_Capabilities.md, Cluster D — Mistral EU endpoint / GCP sub-processor). Backend/legal item; does not block the frontend pages.
+DL-086 chose ZeptoMail (Zoho's transactional service) to send the peer-group operational emails (formation, exit confirmation, wait-pool, opt-in-growth), called server-to-server from a Catalyst Function. These emails carry participant email addresses and, via the group email, the fact of group membership.
 
-**Status:** Open, pending backend/legal confirmation. New from DL-086 (2026-09-07).
+The question was raised as three, and two of them are now answered.
+
+**Endpoint — answered (2026-09-09).** The sending code calls `https://api.zeptomail.eu/v1.1/email`, verified in `functions/peer/index.js`, not assumed. Zoho's own documentation ties the storage region to the registration domain: a `.eu` account stores in the EU.
+
+**DPA — answered by inheritance (2026-09-09).** There is no ZeptoMail-specific DPA; Zoho contracts one DPA across its services, requested from Zoho Legal. The characterization this repository already settled for the shared Zoho EU infrastructure therefore applies here as well: *"a primary processor with SCC-secured, non-physical support access by the Indian Zoho entity"* (DL-027, restated in 15_Technical_Architecture.md). ZeptoMail runs on that same infrastructure. Matthias requested the DPA from Zoho on 2026-09-09; the signed document is an artefact to file, not an open design question.
+
+**Sub-processors — this is what remains open.** Zoho's published sub-processor archives list **Amazon SES** as email-sending infrastructure. If ZeptoMail's EU data centre delivers through a third party, that party is a sub-processor the DL-027 assessment never covered — and these particular mails carry both a participant's address and the fact of their group membership. The current sub-processor directory could not be read: it loads dynamically and returned no rows.
+
+**The one question to put to Zoho:** which sub-processors does ZeptoMail use in the EU data centre for actual delivery, and in which region do they process? Specifically — is Amazon SES involved, and if so, in which AWS region?
+
+**Status:** Narrowed. Endpoint and DPA closed; the sub-processor chain is the sole open item and the sole remaining blocker for production mail. Does not block Development, where mail already sends. Raised by DL-086 (2026-09-07), narrowed 2026-09-09.
 
 ---
 
