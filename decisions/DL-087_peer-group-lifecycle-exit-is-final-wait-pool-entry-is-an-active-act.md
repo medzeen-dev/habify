@@ -106,7 +106,7 @@ cannot fire and a sentence that cannot be true, respectively — neither changes
   signups this cycle" (DL-037) · 3-day bundled broadcast (DL-037, retargeted here).
   Copy for all ten is **final as of 2026-09-08** (reviewed by Matthias), which closes
   DL-037's "flagged for build" copy item. The readable mirror of all artifacts is
-  `functions/peer/EMAILS.md` in habify-app; the strings in `functions/peer/index.js`
+  `TRANSACTIONAL_EMAILS.md` in habify-app (moved there from `functions/peer/EMAILS.md` on 2026-09-09, when it became the register for every sending function rather than the peer group's own); the strings in `functions/peer/index.js`
   are the technical source of truth.
 - **Common mail frame** for all of the above, applied centrally at the send layer rather
   than written into each artifact: every subject is prefixed with the cohort's
