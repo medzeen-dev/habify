@@ -334,6 +334,36 @@ columns, job pool, crons, authorized domain) is correct and ready, but unusable 
 and once the gate opens most of it should arrive by promotion rather than by hand. The
 practical next step is a support request to Zoho, not more configuration work.
 
+**Resolution (2026-09-10, later the same day) — the deploy gate was the payment method.**
+The project sat on the free tier with no payment method. Zoho documents this as the single
+prerequisite for a first Production deployment; the console reported it as the misleading
+*"Please contact your administrator"*. Activating pay-as-you-go lifted the gate immediately,
+and a Development→Production deployment then ran to completion. The gate was never a role or
+an entitlement dispute.
+
+**What the deployment wizard actually offers.** Three stages — *Select Features*,
+*Diff Generation*, *Initiate Deployment* — with a computed diff between the two environments
+before anything is written. Selection is **per component** (19 under Cloud Scale alone), not
+per entity: an individual authorized domain or a single table cannot be picked, but
+`Data Store` and `Authorized Domain` are separately selectable. Two operational facts, both
+learned the hard way:
+
+- **Only one deployment may be open at a time.** A run left in `Diff_Completed` silently
+  resets every new draft when *Generate Diff* is pressed — no error, no message, the form
+  simply reverts. Abort the old run first.
+- **The commit message is capped at 40 characters** and rejects longer input without saying so
+  in any obvious place.
+
+**Schema promotion is exact.** After the deployment, the three peer tables in Production carry
+not only identical `table_id`s but identical `column_id`s to their Development counterparts —
+types, lengths, mandatory and unique flags all match. Promotion copies the schema object
+rather than rebuilding it, which is why the corollary above held.
+
+**No data crosses.** The component picker states it plainly: *"The schema and configurations
+of the selected components will be deployed."* The diff listed 39 Data Store entities, every
+one a table or a column, not a single row. The documented *"all features, components, and
+data"* warning applies to a project's **first** deployment only.
+
 **Distinct from E2 and B5.** B5 concerns whether columns can be created at all (they can, in
 Development); E2 concerns env-var scoping. This entry concerns the environment boundary, which
 sits above both.
