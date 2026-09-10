@@ -309,6 +309,25 @@ environments** (`22671000000014463`, `22671000000014832`, `22671000000014073`), 
 three functions. They reached Production through an earlier deploy, which is why their
 identities match. Nothing in Production was ever built there.
 
+**Correction (same day, after reading the docs): "no configuration changes" is too broad.**
+Production is **structure-locked, not read-only.** Documented as permitted there: creating
+environment variables (*"you can create environment variables specific to the production
+environment"*), cache items in the Default segment, domain mapping (*"Adding a new domain"*),
+collaborators, budgets and payment details, ZCQL test queries, log and metric viewing — and
+**dynamic** crons (*"you can create only dynamic crons in the production environment"*). What
+is blocked is the creation of resources: tables, functions, job pools, CORS domains. The
+measurements above all happen to fall on that side, which is what made the wider claim look
+right.
+
+**Consequence for the peer crons.** Job pools take four target types. *Function*, *Circuit*
+and *AppSail* point at Catalyst resources and resolve per environment; *Webhook* is documented
+as *"any third-party URL"* — an address Catalyst neither rewrites nor may rewrite. The peer
+crons use Webhook because an Advanced-I/O function cannot be cron-triggered directly (E1) and
+a Function pool targets Job Functions, not Advanced I/O. The choice was forced and correct,
+but it makes the environment-specific URL **our** responsibility: a migrated pre-defined cron
+would carry the Development host into Production. Whether Catalyst rewrites it on migration is
+undocumented and remains unmeasured.
+
 **Consequence:** setting Production up is not a task that can be executed — by agent or by
 human — until Zoho lifts the deploy gate. Every specification prepared for it (tables,
 columns, job pool, crons, authorized domain) is correct and ready, but unusable until then,
