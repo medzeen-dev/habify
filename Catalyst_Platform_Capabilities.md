@@ -278,34 +278,46 @@ outside the browser:
 This is also the platform's first measurement against a genuine third-party origin; earlier
 CORS statements were taken through the same-origin Vite dev proxy.
 
-### E5 — The MCP cannot write to Production at all
+### E5 — Production is never configured directly, in any tool — and this account cannot deploy to it
 
-**Finding — measured 2026-09-10.** Every write through the Catalyst MCP is rejected in
-Production with `INVALID_OPERATION`, message *"You cannot perform this operation for current
-environment"*. Reads work in full: tables, columns, functions, crons, job pools, segments and
-CORS domains all list correctly with `Environment: "Production"`.
+**Finding — measured 2026-09-10, first through the MCP, then confirmed in the console.**
+Production configuration cannot be changed by any means available to this project. It is not
+an MCP limitation, not a permissions problem on our side, and not a missing service
+activation.
 
-**Evidence:** three unrelated resource types, three identical rejections —
-`Create_Table` (`PeerSignups`), `Create_CORS_Domain` (`peer.habify30.k-a-d-o.com`) and
-`Create_Job_Pool` (`peerjobs`, Webhook, capacity 1). The restriction is therefore
-environment-wide, not a Data-Store quirk, and not a permissions problem on our side — the
-calls reached Catalyst and Catalyst refused them.
+**Through the MCP:** every write is rejected in Production with `INVALID_OPERATION`,
+*"You cannot perform this operation for current environment"*. Measured on three unrelated
+resource types — `Create_Table` (`PeerSignups`), `Create_CORS_Domain`
+(`peer.habify30.k-a-d-o.com`) and `Create_Job_Pool` (`peerjobs`). Reads work in full.
 
-**Corollary — resources are promoted, not rebuilt.** `AccessControl`, `UserRecovery` and
-`FormSubmissions` carry **identical `table_id`s in both environments**
-(`22671000000014463`, `22671000000014832`, `22671000000014073`), as do the three functions.
-Production resources come from a console promotion out of Development, which is why their
-identities match. A hand-built Production table would have carried a different id.
+**In the console, the same rule is stated outright.** The Production view carries a standing
+banner: *"You are in production environment. You cannot do any configuration changes here."*
+The Data Store's `New Table` button renders in Production and is inert — clicking it does
+nothing. The initial hypothesis that a per-service *"Start Exploring"* activation was missing
+is **wrong**: Production's Data Store is fully active and lists its three tables normally.
 
-**Consequence:** setting Production up is console work, and the console is not reachable
-through any tooling available to the agent. What the agent can still do is read Development
-exhaustively, specify Production down to the last column type, and verify the result
-afterwards through the MCP — but the acts themselves belong to a human. This corrects the
-assumption, held at the start of this session, that granting the agent Production rights
-would let it build Production.
+**The only path into Production is `Deploy to Production`, and it is gated.** The action sits
+in the Development view, not the Production one. Invoking it yields:
+*"Please contact your administrator to proceed with this action. For more details, send a mail
+to support@zohocatalyst.com"* — although the account in question is itself the project Admin
+(`user_type: Admin`). The gate is therefore an account- or plan-level entitlement, not a role
+inside the project.
 
-**Not the same as the E2/B5 limitations.** B5 is about column creation being possible at all
-(it is, in Development); this entry is about the environment boundary, which sits above it.
+**Corollary, now confirmed rather than inferred — Production resources are promoted.**
+`AccessControl`, `UserRecovery` and `FormSubmissions` carry **identical `table_id`s in both
+environments** (`22671000000014463`, `22671000000014832`, `22671000000014073`), as do the
+three functions. They reached Production through an earlier deploy, which is why their
+identities match. Nothing in Production was ever built there.
+
+**Consequence:** setting Production up is not a task that can be executed — by agent or by
+human — until Zoho lifts the deploy gate. Every specification prepared for it (tables,
+columns, job pool, crons, authorized domain) is correct and ready, but unusable until then,
+and once the gate opens most of it should arrive by promotion rather than by hand. The
+practical next step is a support request to Zoho, not more configuration work.
+
+**Distinct from E2 and B5.** B5 concerns whether columns can be created at all (they can, in
+Development); E2 concerns env-var scoping. This entry concerns the environment boundary, which
+sits above both.
 
 ---
 
