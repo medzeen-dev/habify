@@ -145,7 +145,45 @@ It is binary — no per-path or per-type policy, so a short TTL for `index.html`
 
 **Evidence:** Cohorts `c001`, `c002`, `c900` written with seat counts and programme names. Participants `u9001`, `u9002` written under cohort `c900`. Subquery enrichment confirmed correct.
 
-### B8 — Items not measured
+### B8 — No concurrency guarantees: neither a conditional UPDATE nor a unique column serialises (critical finding)
+
+**Finding:** The Data Store offers **no usable mutual exclusion**. Two mechanisms that behave
+correctly when called one after another both fail when called at the same moment:
+
+- **Conditional UPDATE** (`UPDATE … SET group_id = 'x' WHERE ROWID = n AND group_id IS NULL`).
+  Sequentially exact: a hit returns the row, a miss returns `[]`. Concurrently, **two parallel
+  runs both reported winning the same row**, and the later write overwrote the earlier
+  assignment.
+- **Unique column.** Sequentially exact: a second insert of an existing value is rejected with
+  `Duplicate value for <col>. Please give a different value`. Concurrently, **4 of 10 paired
+  inserts of the same value both succeeded** — and the duplicates were then readable in the
+  table, in a column declared unique.
+
+A third candidate never qualified: a **cache-segment key** cannot serve as a lock because
+`put` overwrites an existing key silently (no put-if-absent, see A5's neighbourhood), so both
+runs would be handed the same "lock".
+
+**Evidence:** Development, 2026-09-10. The UPDATE case was caught by returning a per-run trace
+in the HTTP response (application logs from Advanced-I/O functions are not retrievable through
+the MCP — only access logs are): two runs, tagged `021afe` and `c569c8`, both logged
+`claim-a WON` for row `22671000000050370`, and `c569c8`'s read-back showed its own row already
+carrying the other run's group id. The unique case was measured with ten paired concurrent
+inserts against `PeerGroups.group_id` through a temporary probe route, then verified with
+`SELECT group_id, COUNT(ROWID) … GROUP BY group_id`, which showed four values at count 2.
+
+**Consequence, and it is architectural:** the only serialisation this platform gives us is a
+**job pool with max count 1**. Anything that must not run twice at once has to be funnelled
+through such a pool — it cannot be guarded inside the application. Concretely for habify30:
+wait-pool matching runs *only* in the `/run-matching` sweep, and the participant-facing routes
+no longer trigger an immediate match (2026-09-10). It also means the *max-count-1 guarantee is
+not tradeable*: a Function job pool executes jobs in parallel, so migrating the crons to one
+would remove the only guarantee in the system — see the correction note on E1.
+
+A second consequence reaches further than the peer group: **a unique column is not a
+guarantee.** Any logic that assumes `PeerGroups.group_id` (or any other unique column) appears
+at most once is assuming something the datastore does not enforce under load.
+
+### B9 — Items not measured
 
 - Latency vs. row count curve (deliberately not measured — real volumes are small; see DL-069 rationale).
 - Query timeout thresholds.
@@ -243,6 +281,16 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 > for rate limiting).
 >
 > Not yet decided or built — see the handoff `HANDOFF_20260910_cron-umbau-job-function.md`.
+>
+> **Second correction note (2026-09-10, later the same day): there is no such guard.** The
+> cache-segment lock proposed above does not exist — `put` overwrites silently — and neither
+> of the two remaining candidates survives real concurrency either (B8: a conditional UPDATE
+> and a unique column both fail). The max-count-1 job pool is therefore **not a cost to be
+> paid but the only guarantee available**, and a Function pool, which runs jobs in parallel,
+> cannot replace it. The migration as sketched in the handoff is not executable in that shape:
+> either the crons keep a max-count-1 Webhook pool, or the scheduled work has to be made
+> genuinely safe to run twice at once. The `ADMIN_KEY` problem that motivated the migration
+> stands and needs a different remedy.
 
 
 **Finding:** An Advanced-I/O function's own Configuration tab offers only the API Gateway as a trigger — there is no cron option there. Scheduled execution runs through the separate **Job Scheduling** service (console → Job Scheduling), model *Job Pool → Cron → Jobs*: a job pool of type *Webhook* receives the schedule's jobs, and each cron POSTs to a route of the function. The job pool's *max count* is the concurrency cap — set to 1, it guarantees two scheduled sweeps can never overlap.
@@ -256,6 +304,20 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 **Finding:** Environment variables are configured under Functions → *(function)* → Configuration → Environment Variables and are scoped to that one function; a variable set on one function is invisible to another. A value two functions both read must be set on both. They are also per environment — Development and Production are separate sets, switched in the console's environment selector.
 
 **Evidence:** Catalyst console, Development, 2026-09-07/08: environment variables exist only under a function's own Configuration tab, with no project-level equivalent, and the console's environment selector switches between two independent sets. (The example originally recorded here — `PEER_ORIGIN`, set on `peer` and `accesscontrol` alike — no longer applies: `accesscontrol` stopped reading that variable under DL-089. The scoping mechanic itself is unaffected.)
+
+> **Addendum (2026-09-10): `Get_Function` returns every environment variable in cleartext.**
+> A plain read of a function — `Get_Function` via the MCP — includes
+> `configuration.environment.variables` with all values. No flag is needed and no warning is
+> given; asking for a function's deploy timestamp is enough to expose its secrets. On
+> 2026-09-10 this put the Development `ADMIN_KEY` and `ZEPTOMAIL_TOKEN` into a chat transcript
+> unasked, and both had to be rotated.
+>
+> This sharpens E5's "values cannot be confirmed without burning them": the real risk is not
+> that confirming exposes them, but that an *ordinary read* does. **Do not call `Get_Function`
+> against Production while real secrets are set there**, and treat any environment variable
+> as compromised once the function has been read. Corollary for code: never put a value in an
+> env var that is meant to be readable but not secret-bearing — a build marker belongs in the
+> source, not in the configuration.
 
 ### E3 — Slate custom domains: where they live, and a broken value to avoid
 
