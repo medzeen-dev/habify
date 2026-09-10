@@ -278,6 +278,35 @@ outside the browser:
 This is also the platform's first measurement against a genuine third-party origin; earlier
 CORS statements were taken through the same-origin Vite dev proxy.
 
+### E5 — The MCP cannot write to Production at all
+
+**Finding — measured 2026-09-10.** Every write through the Catalyst MCP is rejected in
+Production with `INVALID_OPERATION`, message *"You cannot perform this operation for current
+environment"*. Reads work in full: tables, columns, functions, crons, job pools, segments and
+CORS domains all list correctly with `Environment: "Production"`.
+
+**Evidence:** three unrelated resource types, three identical rejections —
+`Create_Table` (`PeerSignups`), `Create_CORS_Domain` (`peer.habify30.k-a-d-o.com`) and
+`Create_Job_Pool` (`peerjobs`, Webhook, capacity 1). The restriction is therefore
+environment-wide, not a Data-Store quirk, and not a permissions problem on our side — the
+calls reached Catalyst and Catalyst refused them.
+
+**Corollary — resources are promoted, not rebuilt.** `AccessControl`, `UserRecovery` and
+`FormSubmissions` carry **identical `table_id`s in both environments**
+(`22671000000014463`, `22671000000014832`, `22671000000014073`), as do the three functions.
+Production resources come from a console promotion out of Development, which is why their
+identities match. A hand-built Production table would have carried a different id.
+
+**Consequence:** setting Production up is console work, and the console is not reachable
+through any tooling available to the agent. What the agent can still do is read Development
+exhaustively, specify Production down to the last column type, and verify the result
+afterwards through the MCP — but the acts themselves belong to a human. This corrects the
+assumption, held at the start of this session, that granting the agent Production rights
+would let it build Production.
+
+**Not the same as the E2/B5 limitations.** B5 is about column creation being possible at all
+(it is, in Development); this entry is about the environment boundary, which sits above it.
+
 ---
 
 # Confidence
