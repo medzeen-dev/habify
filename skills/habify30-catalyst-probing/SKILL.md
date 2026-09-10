@@ -1,6 +1,6 @@
 ---
 name: habify30-catalyst-probing
-description: "Structure recurring, empirical probes of Zoho Catalyst capabilities for Habify30 via the Catalyst MCP. Use before running any Catalyst measurement (ZCQL aggregation limits, Data Store write reliability, MCP-driven cohort creation). Enforces Development-only access, dummy-data conventions, and a never-guess-IDs discipline, and defines the finding format for capability reports. Survives beyond a single demo — it is the harness for the later real dashboard build, not just for one probe."
+description: "Structure recurring, empirical probes of Zoho Catalyst capabilities for Habify30 via the Catalyst MCP. Use before running any Catalyst measurement (ZCQL aggregation limits, Data Store write reliability, MCP-driven cohort creation). Enforces per-call environment discipline (Development *and* Production — the header is the only thing separating them), dummy-data conventions, and a never-guess-IDs discipline, and defines the finding format for capability reports. Survives beyond a single demo — it is the harness for the later real dashboard build, not just for one probe."
 ---
 
 # Habify30 Catalyst Probing
@@ -21,7 +21,7 @@ project is re-cloned.
 | Development env id | `22671000000014065` (env_type 3, **is_default: false**) | `List_All_Projects` → `env_details` |
 | Production env id | `22671000000016011` (**is_default: true** ← danger) | `List_All_Projects` → `env_details` |
 | DB / timezone | `SINGLE_DB` / `Europe/Berlin` | `Get_Project_By_Id` |
-| Real dev tables — DO NOT TOUCH | `UserRecovery`, `AccessControl`, `FormSubmissions` | `List_All_Tables` |
+| Real dev tables — DO NOT TOUCH | six (verified 2026-09-10): `AccessControl` `22671000000014463`, `FormSubmissions` `22671000000014073`, `UserRecovery` `22671000000014832`, `PeerGroups` `22671000000051023`, `PeerSignups` `22671000000052005`, `CohortConfig` `22671000000053005` | `List_All_Tables` |
 
 ## 2. MCP access convention (non-negotiable)
 
@@ -29,9 +29,14 @@ project is re-cloned.
   `headers.Environment` field. Production is `is_default: true`, so **omitting or
   mis-setting it targets Production.** Set `Environment: "Development"` on
   *every* call — reads and writes alike.
-- **Production is never written.** Read Production only on explicit instruction;
-  never read-and-write. Before any write, confirm the call carries
-  `Environment: "Development"`.
+- **Production is written too, since 2026-09-10.** The earlier blanket ban ("Production
+  is never written") applied to the measuring phase and is lifted: Matthias cannot
+  practically operate the console himself, so setting Production up is agent work.
+  The header discipline therefore gets *stricter*, not looser — a forgotten header
+  used to fail in one direction only, and now fails in both. Production work that
+  silently lands in Development looks exactly as successful as the real thing.
+  **Name the environment on every call, and state which one you are in when you
+  report a result.** No write is described as done without saying where.
 - **Never guess an ID, count, table name, or number — always read it via MCP.**
   In prior sessions two guessed values (an RI number, a row count) slipped
   through and were caught only by attention. Every id / row count / table name
@@ -108,6 +113,16 @@ patterns above.
 
 ### 2026-07-15 — first empirical touch (session "Catalyst-Fähigkeiten messen")
 
+> **Correction note (2026-09-10, Capabilities B5):** the blocking finding below is
+> **no longer true.** An add-column tool *does* exist in the MCP — `Create_Column`,
+> addressed by table id — and it works. Two traps: omit the advertised `description`
+> field (sending it fails the whole call with `PATTERN_NOT_MATCHED`), and send one
+> column per call rather than batching. Evidence: `confirm_token` and
+> `confirm_token_expiry` added to `PeerSignups` in Development, 2026-09-09 (DL-090).
+> Provisioning columns is no longer a manual console step. The rest of the note —
+> `Create_Table` yielding only the 4 system columns, ZCQL having no DDL — still holds.
+> Authoritative source is `Catalyst_Platform_Capabilities.md` B5, not this note.
+
 **Blocking discovery — MCP cannot provision Data Store schema.**
 - `Create_Table` creates only an empty shell with the 4 system columns
   (`ROWID`, `CREATORID`, `CREATEDTIME`, `MODIFIEDTIME`). Evidence: `List_All_Columns`
@@ -174,6 +189,7 @@ not worth re-measuring. The load-limit findings above still stand as facts about
 the MCP; they just don't block the architecture here. The ZCQL latency-curve
 patterns in section 5 remain valid for any future project where volume matters.
 
-**Probe tables left behind (Development):**
+**Probe tables left behind (Development) — cleaned up; `List_All_Tables` on 2026-09-10
+returned neither. Kept as a record of what the measurement cost:**
 - `zz_probe_assessment` — table_id `22671000000016076` — **42 rows** (7 user cols).
 - `zz_probe_cohort` — table_id `22671000000019217` — **3 rows** (6 user cols).
