@@ -36,7 +36,7 @@ Kein Schema-Frontmatter-Zwang. Die Kado-`typ`-Werteliste gilt hier nicht.
 - **Awaris-Material** — Partner-Sphäre, nie in einem Kado-Repo (DL-2026-001 ff.).
 - **Nicht-kanonische Arbeitszustände** — unter `.wip/`, gitignored.
   **Ausnahme: Session-States.** Sie liegen geräteübergreifend in
-  `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\claude sessionstates_temp`, weil `.wip/` gitignored
+  `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\00_claude sessionstates_temp`, weil `.wip/` gitignored
   und damit an ein Gerät gebunden ist. Ort und Benennung regelt der Skill
   `habify30-session-state`.
 

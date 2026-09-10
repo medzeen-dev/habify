@@ -22,7 +22,7 @@ When a thread in the session-state doc becomes *final*, that is the signal to (a
 
 ## Location and naming
 
-- Session-state docs live in the OneDrive folder `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\claude sessionstates_temp` — NOT in the repo (`.wip/` is gitignored and therefore not cross-device), NOT in the numbered canonical set. This is the single location; a session-state doc is never kept in a second place.
+- Session-state docs live in the OneDrive folder `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\00_claude sessionstates_temp` — NOT in the repo (`.wip/` is gitignored and therefore not cross-device), NOT in the numbered canonical set. This is the single location; a session-state doc is never kept in a second place.
 - Naming: `SESSION-STATE_YYYY-MM-DD_<short-topic>.md` (e.g. `SESSION-STATE_2026-07-15_awaris-architektur.md`). The date is the day the state was captured.
 - There is normally **one active** session-state doc per work-stream. When a new one is written to continue a stream, the previous one is superseded — move the superseded file to the `archive/` subfolder of that same OneDrive folder (never delete) and note at the top of the new one which file it supersedes.
 
