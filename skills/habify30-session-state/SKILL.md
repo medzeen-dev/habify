@@ -22,9 +22,9 @@ When a thread in the session-state doc becomes *final*, that is the signal to (a
 
 ## Location and naming
 
-- Session-state docs live in `Claude_Tooling/`, alongside the other handoffs and briefs — NOT in the numbered canonical set, NOT in a new folder.
+- Session-state docs live in the OneDrive folder `C:\Users\MatthiasNitsche\OneDrive - K-A-D-O\claude sessionstates_temp` — NOT in the repo (`.wip/` is gitignored and therefore not cross-device), NOT in the numbered canonical set. This is the single location; a session-state doc is never kept in a second place.
 - Naming: `SESSION-STATE_YYYY-MM-DD_<short-topic>.md` (e.g. `SESSION-STATE_2026-07-15_awaris-architektur.md`). The date is the day the state was captured.
-- There is normally **one active** session-state doc per work-stream. When a new one is written to continue a stream, the previous one is superseded — move the superseded file to `99_Archive/` (never delete) and note at the top of the new one which file it supersedes.
+- There is normally **one active** session-state doc per work-stream. When a new one is written to continue a stream, the previous one is superseded — move the superseded file to the `archive/` subfolder of that same OneDrive folder (never delete) and note at the top of the new one which file it supersedes.
 
 ## What goes in a session-state doc
 
@@ -41,8 +41,8 @@ Structure it so the next chat can start cold and lose nothing. Required sections
 ## Process
 
 1. Read `00_Index.md` first — it maps themes to DL numbers and is the reliable way to fill section 7 without guessing. Never invent DL numbers; read them.
-2. If a prior session-state doc for this stream exists, read it — the new one continues from it, and the old one moves to `99_Archive/`.
-3. Write the doc to `Claude_Tooling/` using the structure above.
+2. If a prior session-state doc for this stream exists, read it — the new one continues from it, and the old one moves to the `archive/` subfolder.
+3. Write the doc to the OneDrive folder named under "Location and naming" using the structure above.
 4. Do NOT touch canonical repo docs. This skill only writes the working doc (and, when superseding, archives the previous working doc).
 5. At the end, tell Matthias in German: the file written, what it captures, and — if anything was archived — which file moved where. List every parked thread by name so he can confirm nothing is missing.
 
@@ -51,5 +51,5 @@ Structure it so the next chat can start cold and lose nothing. Required sections
 - **Do not let the session-state doc duplicate canonical content.** It references DL numbers and files; it does not copy their content. Once a thread is propagated, replace it in the session doc with a pointer to the DL number.
 - **Do not guess DL numbers, IDs, or counts.** Read `00_Index.md` and the relevant files. (Repository precedent: DL-064 — "read every number/ID, never guess"; two guess-errors in a prior session were caught only by attention.)
 - **Do not silently drop a parked thread.** If unsure whether something is still open, list it as open and flag the uncertainty. Over-inclusion is safe here; omission is the failure mode this skill exists to prevent.
-- **Do not delete a superseded session-state doc** — archive it to `99_Archive/`.
+- **Do not delete a superseded session-state doc** — archive it to the `archive/` subfolder.
 - **Do not treat findings as decisions.** A Cowork finding is input to a decision, not the decision itself — it goes in section 5, not section 3, until Matthias has ruled on it.
