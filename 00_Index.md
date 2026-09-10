@@ -114,6 +114,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-065** | **„Konto" im teilnehmerseitigen Text verboten** (habify30 hat keins) · Magic Link = Schlüssel, kein Login · Glossar-Eintrag · Sprachregel `kado-content-voice` |
 | **DL-077** | **Figma-Split**: DS als publizierte Team-Library (`jO1gy…`), Screens im neuen File `habify30 Screens` (`3U4mfB…`), das konsumiert · Cleanup gegen KONV-figma · `— FRAMES —`-Referenzen historisch · Skill `habify30-figma` abgelöst |
 | **DL-078** | **Sechs UX-Kriterien** verbindlich (Handlungsbezug · Weglass-Test · kein Erklärungsbedarf · eine Handlung/Seite · Mobile first · Kontext-Reinheit) |
+| **DL-092** | **Radienskala `0 · 4 · 6 · 8 · 12 · full`** (Wert dazwischen = Defekt) · `color/bg/inverse` + `color/text/on-inverse` als **Paar** (Flächen-Token, *kein* zweiter Akzent — DL-043 bleibt) · `Callout` ist Komponente · **Mobil darf bewusst abweichen** (Fakt-Karten: Icon oben, drei Karten) — bei der Komponentisierung nicht einebnen
 
 **Wichtig:** Rot ist ausschließlich für Fehler reserviert. Eine Frist ist kein Fehler (DL-052).
 
