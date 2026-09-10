@@ -220,6 +220,31 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 
 ### E1 — Advanced-I/O functions are not cron-triggerable from the function itself
 
+> **Correction note (2026-09-10):** the finding below is right; the conclusion drawn from it
+> was wrong. "Advanced I/O cannot be cron-triggered, therefore a **Webhook** job pool" should
+> have read "therefore Advanced I/O is the wrong function type for scheduled work." Catalyst
+> has a dedicated type: a **Job Function** (`job`) is, in Zoho's words, *"a non-HTTPS function,
+> like Event Functions. This function will not have an endpoint"* — triggered internally by
+> Job Scheduling through a **Function** job pool, with parameters via `getJobParam(key)`.
+>
+> Two consequences follow. A Function pool targets a function **reference**, not a URL, so
+> nothing environment-specific travels with a cron and Dev→Prod deployment is clean. And a
+> function with no endpoint needs no shared secret: the `ADMIN_KEY` exists **only** because we
+> chose a publicly reachable HTTP route as the trigger. The cleartext-key finding of
+> 2026-09-10 is a symptom of this shape, not a separate defect.
+>
+> **The cost of switching, measured before deciding:** a Function pool configures **memory,
+> not a count**, and Zoho states *"Jobs can all be executed together in parallel — this is true
+> for Function Job Pool."* The *max count 1* guarantee below — that two scheduled sweeps can
+> never overlap — **does not survive the change.** It bites immediately: `peerformation`
+> (`0 3 * * *`) and `peermatching` (`0 * * * *`) both fire at 03:00 every day, and today the
+> shared Webhook pool serialises them. A redesign must carry its own guard against concurrent
+> sweeps (a cache-segment lock is the obvious candidate; the Default segment is already in use
+> for rate limiting).
+>
+> Not yet decided or built — see the handoff `HANDOFF_20260910_cron-umbau-job-function.md`.
+
+
 **Finding:** An Advanced-I/O function's own Configuration tab offers only the API Gateway as a trigger — there is no cron option there. Scheduled execution runs through the separate **Job Scheduling** service (console → Job Scheduling), model *Job Pool → Cron → Jobs*: a job pool of type *Webhook* receives the schedule's jobs, and each cron POSTs to a route of the function. The job pool's *max count* is the concurrency cap — set to 1, it guarantees two scheduled sweeps can never overlap.
 
 **Evidence:** Both peer crons were configured this way in Development (`peerformation` `0 3 * * *`, `peermatching` `0 * * * *`, Europe/Berlin) and each returned HTTP 200 when triggered manually via *Submit Job*. That the scheduler fires on its own schedule has not been observed yet — see Open Questions.
