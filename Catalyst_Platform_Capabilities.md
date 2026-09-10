@@ -364,6 +364,21 @@ of the selected components will be deployed."* The diff listed 39 Data Store ent
 one a table or a column, not a single row. The documented *"all features, components, and
 data"* warning applies to a project's **first** deployment only.
 
+**`is_deployed: false` does not mean the function is inert.** Every Production function
+reports `is_deployed: false` in `List_All_Functions`, which reads as "registered but carrying
+no code" — it was read that way here and it was wrong. Measured 2026-09-10: a POST to
+`https://habify30-20116360871.catalystserverless.eu/server/peer/run-formation` returns
+**HTTP 403** with `{"status":"error","message":"forbidden"}` — the function's own guard,
+executed. Deployed, routed and running. Whatever the flag tracks, it is not runtime
+availability; do not infer from it.
+
+**Environment variables cannot be verified without exposing them.** `Get_Function` and
+`List_All_Functions` return `configuration.environment` with values in clear. The admin guard
+is deliberately no oracle — `if (!adminKey || body.key !== adminKey)` answers 403 to a missing
+key and a wrong key alike — so an external probe cannot distinguish "set" from "unset" either.
+Confirming that a secret env var is present is therefore a human's visual check in the
+console, not an agent's API call. Reading it to "verify" burns it.
+
 **Distinct from E2 and B5.** B5 concerns whether columns can be created at all (they can, in
 Development); E2 concerns env-var scoping. This entry concerns the environment boundary, which
 sits above both.
