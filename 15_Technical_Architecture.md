@@ -856,6 +856,7 @@ The next technical step should be defining the minimum viable system required to
 * CORS is configured in exactly one place, Authorized Domains, per environment — the backend functions carry no CORS logic at all, because a header set in the function duplicates the gateway's and is rejected by the browser (DL-089; see Catalyst_Platform_Capabilities.md Cluster E4). This holds in Development as well, which since DL-086's origin split is itself a cross-origin case.
 * Peer-group enrolment is a **double opt-in**: an address reaches the list only after its owner confirms it by email, and can never be allocated a seat before (DL-090, superseding DL-086 on this point). The reversal is driven by the typo case — a mistyped address can belong to a stranger who would then receive the other members' addresses.
 * Every habify30 Slate deployment runs with **caching disabled** until the system is stable (DL-091). Slate's default one-year `cache-control` covers `index.html` too, and hash-based asset names do not mitigate it — see Catalyst_Platform_Capabilities.md A5. The setting must be applied before an environment's first visitor.
+* The page frame's two steps follow the component divide — views mounting `<Nav>` take 48 at the top, views mounting `<Header>` take 80, with 96 below and a 32 desktop side margin — and 768 is the project breakpoint. An exception is admissible only where a layout component, not the page frame, sets the threshold, stated with its arithmetic; the lesson renderer's 900 is the one such case (DL-093).
 
 ## Working Assumptions
 

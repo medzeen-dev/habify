@@ -115,6 +115,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-077** | **Figma-Split**: DS als publizierte Team-Library (`jO1gy…`), Screens im neuen File `habify30 Screens` (`3U4mfB…`), das konsumiert · Cleanup gegen KONV-figma · `— FRAMES —`-Referenzen historisch · Skill `habify30-figma` abgelöst |
 | **DL-078** | **Sechs UX-Kriterien** verbindlich (Handlungsbezug · Weglass-Test · kein Erklärungsbedarf · eine Handlung/Seite · Mobile first · Kontext-Reinheit) |
 | **DL-092** | **Radienskala `0 · 4 · 6 · 8 · 12 · full`** (Wert dazwischen = Defekt) · `color/bg/inverse` + `color/text/on-inverse` als **Paar** (Flächen-Token, *kein* zweiter Akzent — DL-043 bleibt) · `Callout` ist Komponente · **Mobil darf bewusst abweichen** (Fakt-Karten: Icon oben, drei Karten) — bei der Komponentisierung nicht einebnen
+| **DL-093** | **Seitengerüst an der Header/Nav-Grenze**: mit `<Nav>` oben 48, mit `<Header>` oben 80 · unten 96, Seitenrand desktop 32 (Desktop-Regel) · **768 ist die Projektschwelle** · Ausnahme **nur**, wo ein *Layout-Bestandteil* die Schwelle setzt, benannt mit Rechnung (Lektions-Renderer 900: Sidebar 320 neben Spalte 720) · `max-width` dort **767.98**, nicht 768 · Inhalts-Breakpoint in einer Spalte ist *kein* Ansichts-Breakpoint |
 
 **Wichtig:** Rot ist ausschließlich für Fehler reserviert. Eine Frist ist kein Fehler (DL-052).
 

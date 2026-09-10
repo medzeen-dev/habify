@@ -637,6 +637,35 @@ The question was raised as three, and two of them are now answered.
 
 ---
 
+## OQ-038
+
+### Three spacing values with no counterpart on the token scale
+
+DL-093 bound the page frame and the project breakpoint, tokenising every hard value that
+had an exact counterpart on the scale. Three did not, and were left standing rather than
+guessed — each would have shifted something visible.
+
+**`28px`** — the Wizard content's top padding on mobile, and the recovery-code panel's
+vertical padding (`WizardLayout.css`). The scale offers 24 and 32 either side; both change
+the panel's height by 8px.
+
+**`60px`** — the horizontal padding of the lesson reading area (`LessonView.css`). It is
+not a page margin but the gap between the sidebar and the reading column, which is why
+DL-093's 32 does not simply apply. The neighbours on the scale are 32 and 64.
+
+**`50px`** — the height of the mobile bottom-sheet grip (`LessonView.css`), which the
+reading column's bottom padding also depends on. Unlike the other two this one has a
+source: Figma node 58:549. It is therefore not an arbitrary value, and correcting it to 48
+would be a design change, not a repair.
+
+Resolving these needs either a measured value from the file or a decision to round to the
+nearest step. Neither existed at the time.
+
+**Status:** Open, low priority. Blocks nothing — the values are in place and commented at
+their location. Raised by DL-093 (2026-09-10).
+
+---
+
 # Prioritisation
 
 Current priorities are considered to be:
