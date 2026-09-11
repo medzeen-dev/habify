@@ -1,14 +1,23 @@
 ---
 name: habify30-catalyst-probing
-description: "Structure recurring, empirical probes of Zoho Catalyst capabilities for Habify30 via the Catalyst MCP. Use before running any Catalyst measurement (ZCQL aggregation limits, Data Store write reliability, MCP-driven cohort creation). Enforces per-call environment discipline (Development *and* Production — the header is the only thing separating them), dummy-data conventions, and a never-guess-IDs discipline, and defines the finding format for capability reports. Survives beyond a single demo — it is the harness for the later real dashboard build, not just for one probe."
+description: "Product-specific layer for empirical Catalyst probes on the Habify30 project — the verified project/environment/table IDs, the real tables that must never be touched, and the product decisions about what is worth measuring. The general discipline (environment per call, zz_probe_ dummy data, never guess an ID, three-line finding) lives in kado: KONV-catalyst, VF-catalyst-messen and its skill catalyst-messen; the measured platform behaviour in DOK-catalyst-mcp and, product-near, Catalyst_Platform_Capabilities.md. Load this together with catalyst-messen, before any Catalyst measurement for Habify30."
 ---
 
-# Habify30 Catalyst Probing
+# Habify30 Catalyst Probing — product layer
 
-Purpose: turn "we assume Catalyst can do X" into "we measured that Catalyst does
-X up to limit Y". *Reality beats elegance.* Nothing that is measurable is assumed.
+Since 2026-09-11 the tool-general substance of this skill lives in `kado`:
 
-## 1. Verified environment facts (re-read, never hardcode blindly)
+| What | Where |
+|---|---|
+| Standing rules — `--dc eu`, environment on every call, `zz_probe_` dummy data, nothing guessed, records only aggregated, schema in the console | `kado/konventionen/catalyst-konventionen.md` (`KONV-catalyst` §1, §2, §7, §8, §9, §10) |
+| The measurement procedure and its handgrips | `kado/verfahren/catalyst-messen/` (`VF-catalyst-messen`, skill `catalyst-messen`) |
+| Measured platform behaviour — schema gap, 200-row insert cap, Stratus gate, ZCQL feature support, `COUNT(DISTINCT)`, JOIN, OLAP | `kado/dokumentation/referenz_catalyst-mcp.md` (`DOK-catalyst-mcp`) |
+| Product-near measurements incl. Production gating (E5), concurrency (B8), cache headers (A5) | `Catalyst_Platform_Capabilities.md` in this repository |
+
+This file keeps only what is specific to Habify30. It does not restate the rules; where it
+seems to, the `kado` text wins (`KONV-kanon-dokumente` §5).
+
+## 1. Verified environment facts (re-read, never hardcode blindly — `KONV-catalyst` §1, §8)
 
 These were read from the MCP, not guessed. Re-verify with `List_All_Organizations`
 and `List_All_Projects` at the start of every session — IDs can change if the
@@ -23,93 +32,24 @@ project is re-cloned.
 | DB / timezone | `SINGLE_DB` / `Europe/Berlin` | `Get_Project_By_Id` |
 | Real dev tables — DO NOT TOUCH | six (verified 2026-09-10): `AccessControl` `22671000000014463`, `FormSubmissions` `22671000000014073`, `UserRecovery` `22671000000014832`, `PeerGroups` `22671000000051023`, `PeerSignups` `22671000000052005`, `CohortConfig` `22671000000053005` | `List_All_Tables` |
 
-## 2. MCP access convention (non-negotiable)
+## 2. Production on this project
 
-- **Environment is a per-call header.** Every Catalyst MCP tool takes a
-  `headers.Environment` field. Production is `is_default: true`, so **omitting or
-  mis-setting it targets Production.** Set `Environment: "Development"` on
-  *every* call — reads and writes alike.
-- **Production is written too, since 2026-09-10.** The earlier blanket ban ("Production
-  is never written") applied to the measuring phase and is lifted: Matthias cannot
-  practically operate the console himself, so setting Production up is agent work.
-  The header discipline therefore gets *stricter*, not looser — a forgotten header
-  used to fail in one direction only, and now fails in both. Production work that
-  silently lands in Development looks exactly as successful as the real thing.
-  **Name the environment on every call, and state which one you are in when you
-  report a result.** No write is described as done without saying where.
-- **Never guess an ID, count, table name, or number — always read it via MCP.**
-  In prior sessions two guessed values (an RI number, a row count) slipped
-  through and were caught only by attention. Every id / row count / table name
-  that appears in a report is read from a tool response and cited with its
-  source call.
-- **State uncertainty openly.** The report writes the promise that is true, not
-  the one that sounds good. "Tested to 5,000 rows, not beyond" beats "scales well".
+Production configuration cannot be written by any tool available to this project; the only
+path is `Deploy to Production`, which was gated on 2026-09-10 (see
+`Catalyst_Platform_Capabilities.md` E5). Every call names its environment
+(`KONV-catalyst` §2); a write to Production, where it is possible at all, is an egress act
+on explicit instruction (`VTR-catalyst` Dimension 5, DL-2026-018 rule 4). Production records
+are never read as single rows (DL-2026-018 rule 3).
 
-## 3. Dummy-data convention
+## 3. What is worth measuring here
 
-- All probe tables are throwaway and prefixed **`zz_probe_`** so they are
-  obviously disposable and easy to find/clean up.
-- Only synthetic data — no real cohort, participant, or customer data.
-- At the end of every probing session, list each created/filled table
-  individually: name, table_id, purpose, row count. Matthias cleans up.
-- Prefer `Truncate_Table` between load stages (keeps schema, drops rows);
-  `Delete_Table` only when the table itself is no longer needed.
+**Decision (2026-07-15):** the latency/scale curve was deliberately dropped for Habify30 —
+real data volumes are small and high scale is Catalyst's core product. The load-limit findings
+stand as facts about the MCP (`DOK-catalyst-mcp`); they do not block the architecture. Any
+future probe starts from the "not measured" list in `DOK-catalyst-mcp` and in
+`Catalyst_Platform_Capabilities.md` (A7, B9), not from zero.
 
-## 4. Loading data at scale
-
-- `Insert_Rows` accepts an array of row objects per call — good for hundreds of
-  rows per call, but many calls for tens of thousands. Batch and track cumulative count.
-- For large loads (20k+), prefer `Create_Bulk_Write_Job` from an uploaded CSV
-  (`file_id`) when insert-call volume becomes the bottleneck. Poll with
-  `Get_Bulk_Write_Job_Status`.
-- Measure and record the actual row count after loading (`SELECT COUNT(ROWID)`),
-  never the intended count.
-
-## 5. ZCQL test patterns (reusable checklist)
-
-Run each class at each load stage; record wall-clock latency per query.
-
-1. **GROUP BY + COUNT/AVG/SUM** — e.g. average value per dimension per cohort
-   (`GROUP BY pid, dimension`). The core of any assessment dashboard.
-2. **Multi-axis GROUP BY** — e.g. dimension × wave (baseline→end change per
-   dimension). Tests whether multi-dimensional aggregation is native.
-3. **JOIN + aggregate** — assessment answers joined to a cohort master table,
-   then aggregated. Tests whether enriched analysis is native or needs post-processing.
-4. **Latency curve** — for each class at each stage, log response time. The goal
-   is the *curve* (where does it slow down, at what row count / complexity), not a
-   single number.
-
-Known pitfalls the report must address explicitly:
-
-- **ZCQL feature gaps** — are all needed aggregate functions, nested/multi-axis
-  GROUP BY, and JOIN types supported? A missing function is a core finding
-  ("native aggregation is not enough because X is missing"), not something to gloss over.
-- **Result-set / row limits** — does ZCQL cap returned rows per query (forcing
-  pagination)? If so, from what number, and does it force function-side post-processing?
-- **Timeout behaviour** — are there query timeouts? At what load?
-- ZCQL notes: use `ROWID` as the row key; `COUNT(ROWID)` for counts.
-  `Execute_Query` has an `OLAP` flag — test analytical queries both with and
-  without it and record any difference.
-
-## 6. Finding format (per measurement point)
-
-For each measurement point, produce exactly:
-
-- **One clear Yes/No answer** to the single question that drives the architecture.
-- **The measured number** that backs it (with the source call).
-- **The limit at which it tips** ("native up to X rows, then Function-side").
-
-Example: "Native ZCQL aggregation carries an assessment dashboard — YES, up to
-~N rows / complexity C; beyond that <observed failure mode>."
-
-## 7. This skill is sharpened during measurement
-
-Whatever shows up during probing as a useful pattern or a stumbling block gets
-written back here. The skill is better at the end of a session than at the start.
-Append findings under a dated "Field notes" section rather than overwriting the
-patterns above.
-
-## Field notes
+## Field notes (record of the measurements; platform-general findings are mirrored in `DOK-catalyst-mcp`)
 
 ### 2026-07-15 — first empirical touch (session "Catalyst-Fähigkeiten messen")
 

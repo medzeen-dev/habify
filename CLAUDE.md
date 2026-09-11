@@ -45,8 +45,20 @@ Kein Schema-Frontmatter-Zwang. Die Kado-`typ`-Werteliste gilt hier nicht.
 Werkzeug-Verträge und -Konventionen leben in `kado` und gelten hier per Verweis, nicht
 per Kopie. Ein Werkzeug, ein Vertrag — auch wenn es in mehreren Sphären genutzt wird.
 
-Relevant und in Kraft: `VTR-figma`, `KONV-figma`, `KONV-visuelle-zugaenglichkeit` und der
-Ausführungs-Skill `figma-bauen` (alle in `kado`), gelten hier per Verweis. Siehe DL-077.
+Relevant und in Kraft, alle in `kado`, per Verweis:
+
+- Figma: `VTR-figma`, `KONV-figma`, `KONV-visuelle-zugaenglichkeit`, Skill `figma-bauen` (DL-077).
+- Catalyst: `VTR-catalyst` (Dimension 3 bindet die Datenklassen der Produkt-Records),
+  `KONV-catalyst`, `DOK-catalyst-mcp`, Verfahren `VF-catalyst-messen` mit Skill `catalyst-messen`.
+  Der habify-Skill `habify30-catalyst-probing` ist seitdem nur noch der produktspezifische
+  Aufsatz darauf.
+- ZeptoMail: `VTR-zeptomail`.
+- Claude Code: `KONV-claude-code` — §3 erlaubt den Direkt-Commit, wo die Repo-Governance ihn
+  vorsieht; das ist hier der Fall.
+
+Plattform-Befunde, die über habify30 hinaus gelten, fließen nach `DOK-catalyst-mcp` in `kado`
+(Verfassung §13, DL-2026-016); `Catalyst_Platform_Capabilities.md` bleibt die produktnahe,
+gemessene Quelle und wird dabei referenziert, nicht kopiert.
 
 ## Oberflächen und ihre Einstiege
 
