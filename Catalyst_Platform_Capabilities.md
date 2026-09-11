@@ -69,6 +69,8 @@ It is binary — no per-path or per-type policy, so a short TTL for `index.html`
 
 **Ordering trap:** `no-store` applies only to responses fetched *after* the change. A browser that already cached `index.html` under the one-year policy keeps it, and no later setting reaches it. The setting therefore has to be in place **before an environment's first visitor**, not after the first redeploy breaks something. See DL-091 for habify30's standing decision.
 
+**In Production the toggle fails — measured 2026-09-11.** On the first Production Slate app (`peerpages-prod-2026-09-11`, app `701000000004029`, deployment `701000000004031`, created by Direct Upload, framework static), *Configuration → General Settings → Cache → Disable* opens its confirmation dialog and then answers *"An exception occurred while updating the cache. Please try again."* Twice, with a page reload in between, roughly 30 minutes after the app was created. The header stayed `public, max-age=31536000` on `index.html` and assets (checked with cache-busting query strings, `X-Nimbus-Cache: MISS`, so the CDN was not masking it). In Development the same toggle worked on 2026-09-09. Whether this is the E5 configuration lock reaching into Slate after all, a difference between CLI-deployed and upload-deployed apps, or a transient fault, is unknown — support ticket raised. **Until it is resolved, no custom domain is mapped to the Production app and its URL is not shared**: the ordering trap above means the first real browser visit under the one-year policy would be the one that cannot be undone.
+
 ### A6 — Additional side findings
 
 - **No warmup delay:** Slate responds immediately on first request after deploy. No 503-during-warmup was observed. Web Client Hosting had a warmup-503.
