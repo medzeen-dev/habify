@@ -51,7 +51,9 @@ without rounding.
 
 Keeping the 30 in the name while the phase runs 28 days is a deliberate asymmetry, not an
 oversight: the name is recognised, the website carries it, and a rename buys nothing. What
-matters is that no document claims the phase lasts thirty days.
+matters is that no document claims the phase lasts thirty days. (Six working weeks are thirty
+working days — the name is, read that way, exact for the whole programme; that is a pleasant
+coincidence, not a claim any document makes.)
 
 Dropping the phase names from sales material follows from who reads it. The names are
 useful inside the programme, where a participant moves through them; a buyer needs the
