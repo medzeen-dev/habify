@@ -98,7 +98,7 @@ The project has not yet defined which measures should become the preferred indic
 
 ### How long should behavioural support continue?
 
-The current journey focuses on approximately thirty days.
+The current journey focuses on a four-week Momentum Phase (DL-095).
 
 Questions remain.
 

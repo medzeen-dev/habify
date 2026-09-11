@@ -266,7 +266,9 @@ Participants recognise that behavioural change is an iterative process rather th
 
 ## Purpose
 
-Support repeated behavioural implementation over approximately thirty days.
+Support repeated behavioural implementation over four calendar weeks (DL-095).
+
+The phase starts and ends on a fixed weekday, cohort-wide; the weekday is cohort configuration (DL-095, not yet decided).
 
 Momentum represents the largest part of the transfer journey.
 
@@ -483,7 +485,7 @@ The architecture therefore spends most of its effort supporting what happens aft
 
 ## Established
 
-- Four-phase transfer architecture: Ready Check, Impulsphase, Veränderungswerkstatt, Momentum. Total programme length ~6 weeks; the 30-day figure refers specifically to the Momentum Phase, not the whole journey.
+- Four-phase transfer architecture: Ready Check, Impulsphase, Veränderungswerkstatt, Momentum. Total programme length six weeks (1 + 1 + 4); Momentum runs four calendar weeks and every phase starts and ends on a fixed weekday (DL-095). The 30 in the name is the brand, not a day count.
 - Ready Check is a free, unregistered qualification tool with no gate function (see DL-023). Ready Check ships as a separate Rise Web Export with no technical connection to the Shell-orchestrated Impulsphase/Veränderungswerkstatt/Momentum phases (DL-028, DL-030), and runs its own, independently-scoped Shell rather than sharing the main programme Shell's `pid` access lifecycle (DL-033). Two customer-facing entry pathways exist: Ready-Check-first (via the client's own portal) and direct registration bypassing it (DL-033).
 - Impulsphase, Veränderungswerkstatt and Momentum are each orchestrated by a persistent Shell (DL-030) — not as one combined package. **Superseded by DL-076:** lesson content is no longer a Rise Web Export; lessons are self-built Markdown, rendered natively by the Shell (no iframe).
 - Behavioural implementation is the primary objective.

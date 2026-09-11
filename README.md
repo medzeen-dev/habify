@@ -233,7 +233,7 @@ Several core product decisions are considered stable:
 * Habify30 is a B2B product.
 * The primary problem is transfer, not learning.
 * The product supports behavioural implementation after learning interventions.
-* The user journey is structured around a ~6-week transfer process, with a 30-day Momentum Phase at its core (Ready Check, Impulsphase, Veränderungswerkstatt, Momentum).
+* The user journey is structured around a ~6-week transfer process, with a four-week Momentum Phase at its core (Ready Check, Impulsphase, Veränderungswerkstatt, Momentum).
 * Simplicity, reflection, repetition and peer support are core design principles.
 * Ready Check is a free, unregistered qualification tool with no gate function (see DL-023).
 
@@ -374,7 +374,7 @@ It should become the single source of truth for Habify30.
 * Habify30 is currently scoped as a B2B product for organisations.
 * The product complements existing learning and development interventions.
 * Everyday work is the primary implementation environment.
-* The ~6-week transfer journey, with its 30-day Momentum Phase, is the central product structure.
+* The six-week transfer journey (1 + 1 + 4 weeks), with its four-week Momentum Phase, is the central product structure (DL-095).
 * The repository is maintained in Git; Azure DevOps `habify` is the authoritative location.
 
 ## Working Assumptions

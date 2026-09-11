@@ -301,6 +301,8 @@ habify30 embeds development into work itself.
 
 # Why Thirty Days?
 
+> **Correction note (2026-09-11, DL-095):** The Momentum Phase runs four calendar weeks (28 days) on a fixed weekday grid; the 30 remains in the name only. The argument below — that the exact number is not the point — is unchanged and is what made the change possible.
+
 Thirty days are not presented as a scientifically fixed habit threshold.
 
 The duration is primarily a design decision.

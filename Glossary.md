@@ -271,9 +271,9 @@ The journey currently consists of four phases across approximately six weeks tot
 1. Ready Check (free qualification tool)
 2. Impulsphase (~1 week)
 3. Veränderungswerkstatt (~1 week)
-4. Momentum (30 days)
+4. Momentum (four calendar weeks)
 
-The "30 days" in habify30's name refers specifically to the Momentum Phase, not the full journey.
+Every phase starts and ends on a fixed weekday, cohort-wide. The 30 in habify30's name is the brand, not a day count (DL-095).
 
 ---
 

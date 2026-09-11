@@ -35,7 +35,7 @@ Das Programm basiert auf folgenden, praxisbasierten Annahmen:
 
 habify30 schließt genau diese Lücke zwischen Erkenntnis und Verhalten.
 
-Das Programm vermittelt keine neuen Inhalte, sondern begleitet Mitarbeitende über einen Gesamtzeitraum von rund 6 Wochen dabei, vorhandene Vorsätze systematisch in stabile Gewohnheiten zu übersetzen — durch klare Schritte, strukturierte Reflexion und gezielten Peer-Support. Die namensgebenden "30 Tage" beziehen sich spezifisch auf die Momentum-Phase, nicht auf die Gesamtlaufzeit.
+Das Programm vermittelt keine neuen Inhalte, sondern begleitet Mitarbeitende über einen Gesamtzeitraum von rund 6 Wochen dabei, vorhandene Vorsätze systematisch in stabile Gewohnheiten zu übersetzen — durch klare Schritte, strukturierte Reflexion und gezielten Peer-Support. Die Momentum-Phase dauert vier Kalenderwochen; die 30 im Namen ist die Marke, keine Tageszahl (DL-095).
 
 Der Fokus liegt nicht auf „mehr Wissen", sondern auf nachhaltiger Umsetzung im realen Arbeitsalltag.
 
@@ -169,7 +169,7 @@ Begrenzte Coaching-Slots (15 Minuten, punktuelle Klärung), aufgrund limitierter
 
 3. **Veränderungswerkstatt** (~1 Woche) — Aus Richtung wird dein Plan. Präaktionale Phase (Planung & Vorbereitung), mündet im validierten Momentum-Plan.
 
-4. **Momentum-Phase** (30 Tage) — Aus deinem Plan wird Wirklichkeit. Aktionale Phase: Umsetzung, Selbststeuerung, Umgang mit Hindernissen.
+4. **Momentum-Phase** (vier Wochen) — Aus deinem Plan wird Wirklichkeit. Aktionale Phase: Umsetzung, Selbststeuerung, Umgang mit Hindernissen.
 
 Impulsphase, Veränderungswerkstatt und Momentum-Phase laufen technisch als ein kombiniertes Rise-360-Web-Export-Modul (siehe DL-022, DL-028), getrennt vom Ready-Check-Modul (kostenpflichtig vs. frei — Produkt-/Lizenzgrenze, nicht technisches Gate). *(Korrekturnotiz: Rise 360 ist für das kombinierte Modul abgelöst — selbstgebaute Markdown-Lektionen nativ in der Shell, DL-076/DL-083. Die Produkt-/Lizenzgrenze zum freien Ready-Check-Modul bleibt.)*
 
@@ -212,7 +212,7 @@ Kriterien:
 
 - mindestens ein persönliches Veränderungsziel, das kein suchthaftes oder therapiebedürftiges Anliegen ist (severity-based Grenze, nicht mehr auf die Behavioral/Habit-Ebene beschränkt — siehe Canon C-019, DL-025)
 - aktive Arbeitsbereitschaft im Programm
-- Bereitschaft zu 30 Tagen Commitment in der Momentumphase, gemeinsam mit anderen
+- Bereitschaft zu vier Wochen Commitment in der Momentumphase, gemeinsam mit anderen
 
 Technisch: Rise-360-Web-Export → Zoho Forms, als eigenständiges, freies Modul ohne technische Verbindung zum Hauptprogramm (siehe DL-027, DL-028, 15_Technical_Architecture.md).
 
@@ -254,7 +254,7 @@ Ziele: Verständnis für wirksame Gewohnheitsbildung; ausgearbeiteter, validiert
 - Konkrete Ankersituation
 - Drei Stufen (Start / Normal / Stretch) — die Stretch-Stufe wird nach dem Prinzip „was traue ich mich gerade so" gewählt, nicht nach generischer Steigerung/mehr-vom-Gleichen (Content-Design-Vorgabe, siehe DL-025)
 - Routing-Flag (einmalig in der Veränderungswerkstatt erfasst): markiert, ob das Vorhaben für die Person etwas Riskantes/Mutiges berührt; steuert, ob in der Momentum-Reflexion die bedingte Erwartungsverletzungs-Frage erscheint (siehe DL-025, Momentum-Phase-Abschnitt unten, 15_Technical_Architecture.md, SCORMxFillout_Connector_Export.md)
-- Dauer: 30 Tage, danach bewusste Entscheidung über Fortsetzung
+- Dauer: vier Wochen, danach bewusste Entscheidung über Fortsetzung
 - Fallback-Ritual bei Krankheit/Ausfall
 
 ## Realitätsprüfung (Zoho Forms)
@@ -269,7 +269,7 @@ Breakout mit Momentum-Gruppe, gegenseitige Vorstellung der Vorhaben.
 
 # Momentum-Phase
 
-30 Tage, in denen das Vorhaben lebendig gemacht wird.
+Vier Wochen, in denen das Vorhaben lebendig gemacht wird.
 
 Reminder-/Cueing-Funktion: übernommen durch tägliche, informelle Peer-Gruppen-Interaktion (siehe DL-019) — kein technischer Reminder-Kanal.
 

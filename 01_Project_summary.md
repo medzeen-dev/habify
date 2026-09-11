@@ -54,7 +54,7 @@ As a result, organisations frequently fail to realise the intended return on inv
 
 habify30 extends learning beyond the classroom.
 
-It provides a structured transfer journey of approximately six weeks in total (Ready Check, Impulsphase, Veränderungswerkstatt, Momentum), that helps participants integrate selected behaviours into their daily work. The 30-day figure in the product name refers specifically to the Momentum Phase, not the full journey.
+It provides a structured transfer journey of approximately six weeks in total (Ready Check, Impulsphase, Veränderungswerkstatt, Momentum), that helps participants integrate selected behaviours into their daily work. The Momentum Phase runs four calendar weeks; the 30 in the product name is the brand, not a day count (DL-095).
 
 The solution combines:
 
