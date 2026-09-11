@@ -510,6 +510,16 @@ missing skips every mail that carries a link, `ZEPTOMAIL_TOKEN` missing skips ev
 are fail-open by design (DL-053), so nothing in the response reveals it. Add it to the
 runbook; it will not announce itself.
 
+*Slate is the exception: apps are created in Production directly, not promoted.* The
+Production view of Slate opens on `#/slate/app/new` with the full creation surface — Direct
+Upload, three repository providers, starter templates — and Slate does not appear among the
+deployment wizard's components at all (Serverless, Job Scheduling, CloudScale, Settings,
+DevOps, Signals). So the promotion worry that a Dev bundle would carry the Dev backend URL
+into Production is moot: the Production bundle is built with `npm run build:peer` (gateway
+URL) and uploaded there as a ZIP. One caveat for automation: the Slate console renders in a
+cross-origin iframe (`zgraphql.zoho.eu`), and the upload goes through a native file dialog —
+neither reachable by a browser agent. The upload is a human step.
+
 **Distinct from E2 and B5.** B5 concerns whether columns can be created at all (they can, in
 Development); E2 concerns env-var scoping. This entry concerns the environment boundary, which
 sits above both.
