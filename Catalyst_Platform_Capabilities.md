@@ -85,6 +85,24 @@ It is binary — no per-path or per-type policy, so a short TTL for `index.html`
 > URL until the toggle works) and DL-091 are unchanged. Whether to map the domain on the
 > vendor's word is a product decision, not a finding.
 
+**Measured against the vendor's claim — Production, 2026-09-11, ~21:45 CET.** Setup: the
+Production app (`701000000004029`, cache enabled, toggle still broken) was opened once in a
+private browser window without a query string, so that window held `index.html` (bundle
+`peer-ohEzTV7g.js`) under the one-year policy. A new build (bundle `peer-MxxkVtfq.js`, only
+a build marker changed) was then uploaded to the **same** app and deployment. Origin check
+with a cache-busting query: `last-modified` moved to 19:43 GMT, `index.html` referenced the
+new bundle, the old bundle answered 404, `X-Nimbus-Cache: MISS` — the edge cache was fresh
+at once, as the vendor said. More than five minutes later the private window navigated to
+the page again by bookmark (a plain navigation, not a reload): **9 requests, 0 bytes
+transferred, every one "(disk cache)"** — document, old bundle, CSS, fonts. The browser did
+not ask the origin once and ran the previous build without any visible sign; because the old
+bundle was cached too, there was not even a 404 for the `peer.html` stale-cache guard to
+catch. Conclusion: the deployment invalidates the **edge** cache; it does not and cannot
+reach the **browser's** copy, and "you can proceed with mapping your custom domain" rests on
+the edge case only. The ordering trap stands as written; DL-091 stands. Side finding from
+the same round: the console's Direct Upload creates a **new** Slate app by default — the
+upload has to be started from inside the existing app's deployment to replace its build.
+
 ### A6 — Additional side findings
 
 - **No warmup delay:** Slate responds immediately on first request after deploy. No 503-during-warmup was observed. Web Client Hosting had a warmup-503.
