@@ -291,6 +291,8 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 > either the crons keep a max-count-1 Webhook pool, or the scheduled work has to be made
 > genuinely safe to run twice at once. The `ADMIN_KEY` problem that motivated the migration
 > stands and needs a different remedy.
+>
+> **Resolved (2026-09-11, DL-094).** The remedy is one Job Function under one hourly cron, with formation and matching in sequence inside a single run. What serialises two runs is the platform's 15-minute execution cap for job functions against the 60-minute interval — two ticks cannot overlap. Verified: the job function's listed `/execute` URL answers 403 "HTTP Execution is not supported", so there is no endpoint and no key. The Webhook pool, both old crons and `ADMIN_KEY` are retired. The guarantee is conditional on the interval staying above the cap, retries staying at 0, and no manual "Submit Job" during a scheduled window — DL-094 carries the rules.
 
 
 **Finding:** An Advanced-I/O function's own Configuration tab offers only the API Gateway as a trigger — there is no cron option there. Scheduled execution runs through the separate **Job Scheduling** service (console → Job Scheduling), model *Job Pool → Cron → Jobs*: a job pool of type *Webhook* receives the schedule's jobs, and each cron POSTs to a route of the function. The job pool's *max count* is the concurrency cap — set to 1, it guarantees two scheduled sweeps can never overlap.

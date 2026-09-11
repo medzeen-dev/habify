@@ -666,6 +666,27 @@ their location. Raised by DL-093 (2026-09-10).
 
 ---
 
+## OQ-039
+
+### A sanctioned way to run the peer-group sweep out of schedule
+
+DL-094 makes the hourly cron the only trigger for `peersweep`, and its serialisation
+guarantee rests on runs never overlapping. The one way to overlap a run today is the console's
+"Submit Job" — the same button that has been the test method throughout. Nothing stops it, and
+nothing tells the person pressing it whether a scheduled run is active.
+
+Two situations will want an out-of-schedule run: testing after a deploy, and a support case
+where a cohort must be formed or matched now rather than within the hour. Neither has a safe
+path. Options not yet weighed: a second, disabled cron that is enabled for one tick; a job
+parameter that the sweep honours to restrict itself to one cohort (job parameters from
+`Submit_Cron_Job` were measured not to arrive on 2026-09-11, so this would need the cron's own
+parameter block); or simply the rule "never inside the first minute after the hour" plus a
+runbook.
+
+**Status:** Open. Blocks nothing in normal operation. Raised by DL-094 (2026-09-11).
+
+---
+
 # Prioritisation
 
 Current priorities are considered to be:

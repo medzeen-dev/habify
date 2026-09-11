@@ -7,6 +7,8 @@ superseded_by: []
 ---
 # DL-037
 
+> **Correction note (2026-09-11, DL-094):** "grouped as soon as 2 solo participants are available" now reads **"at the next hourly sweep"**. Matching no longer runs at the moment someone enters the wait pool — it runs only in the scheduled sweep, once an hour. Reason: the immediate match ran outside the serialised job pool, and two people entering the pool at the same moment produced two parallel sweeps on the same rows; the datastore offers no guard against that (Capabilities B8). Up to an hour of reaction time is the price of never pairing one person into two groups. The 3-day broadcast and the opt-in mechanics are unchanged.
+>
 > **Correction note (2026-09-08, DL-087):** Three precisions from reading the lifecycle end to end while building the wait pool:
 >
 > **Exit is a full exit.** "The exiting participant enters a shared wait pool" is superseded — confirming the exit removes the address from the signup list and does **not** re-match the participant. Re-entry is an active new enrolment. Silently re-matching someone who just left would re-disclose their address to a circle they never asked for, against the DL-036 consent ("the other members of **my** peer group"); DL-053's confirmation-page copy already assumed this reading. The wait pool therefore holds only late joiners and members of a dissolved group who opted back in.
