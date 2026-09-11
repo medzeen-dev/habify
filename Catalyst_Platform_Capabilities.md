@@ -406,6 +406,19 @@ outside the browser:
 This is also the platform's first measurement against a genuine third-party origin; earlier
 CORS statements were taken through the same-origin Vite dev proxy.
 
+> **Addendum (2026-09-11): a custom domain mapped to a Slate app is accepted by the gateway
+> before it is entered under Authorized Domains.** Measured in Development while bringing
+> the Shell up as Slate app `shell`: with the Authorized Domains list holding only
+> `peer-dev…` and `peer…`, an `OPTIONS` and a real `POST` to `/server/accesscontrol/` with
+> `Origin: https://app-dev.habify30.k-a-d-o.com` — mapped to the app minutes earlier — both
+> came back with a single `Access-Control-Allow-Origin` for that origin. The app's default
+> `…onslate.eu` address did not (no header), nor did an unrelated origin, so the gateway is
+> still allow-listing; the mapping evidently registers the domain somewhere the list does not
+> show. The origin was entered explicitly anyway (`22671000000060018`), so that the
+> configuration does not rest on an undocumented side effect — after which the header was
+> still single, not doubled. Whether the hidden registration survives an unmapping is not
+> measured.
+
 ### E5 — Production is never configured directly, in any tool — and this account cannot deploy to it
 
 **Finding — measured 2026-09-10, first through the MCP, then confirmed in the console.**
