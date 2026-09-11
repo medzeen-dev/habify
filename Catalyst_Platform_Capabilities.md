@@ -71,6 +71,20 @@ It is binary — no per-path or per-type policy, so a short TTL for `index.html`
 
 **In Production the toggle fails — measured 2026-09-11.** On the first Production Slate app (`peerpages-prod-2026-09-11`, app `701000000004029`, deployment `701000000004031`, created by Direct Upload, framework static), *Configuration → General Settings → Cache → Disable* opens its confirmation dialog and then answers *"An exception occurred while updating the cache. Please try again."* Twice, with a page reload in between, roughly 30 minutes after the app was created. The header stayed `public, max-age=31536000` on `index.html` and assets (checked with cache-busting query strings, `X-Nimbus-Cache: MISS`, so the CDN was not masking it). In Development the same toggle worked on 2026-09-09. Whether this is the E5 configuration lock reaching into Slate after all, a difference between CLI-deployed and upload-deployed apps, or a transient fault, is unknown — support ticket raised. **Until it is resolved, no custom domain is mapped to the Production app and its URL is not shared**: the ordering trap above means the first real browser visit under the one-year policy would be the one that cannot be undone.
 
+> **Addendum (2026-09-11, vendor reply — a claim, not a measurement):** Catalyst support
+> confirms the failing toggle is a fault on their side, being worked on, no date. They add
+> that caching with the one-year `max-age` does not pin the app to its first build: a new
+> deployment invalidates the cache automatically within about two minutes, *Flush* does so
+> manually, and the custom domain can be mapped without disabling the cache.
+>
+> Read against this entry: that describes the **server-side** cache. What the 2026-09-09
+> measurement caught is the **browser's** copy of `index.html`, held under `max-age=31536000`
+> — a deployment cannot reach it, and this entry already records that Flush cannot either.
+> The reply does not address that case and so does not lift the ordering trap. Nothing here
+> has been re-measured on the strength of the reply; the standing rule (no domain, no shared
+> URL until the toggle works) and DL-091 are unchanged. Whether to map the domain on the
+> vendor's word is a product decision, not a finding.
+
 ### A6 — Additional side findings
 
 - **No warmup delay:** Slate responds immediately on first request after deploy. No 503-during-warmup was observed. Web Client Hosting had a warmup-503.
