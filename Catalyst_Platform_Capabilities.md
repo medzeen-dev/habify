@@ -1,7 +1,7 @@
 # Catalyst_Platform_Capabilities.md
 
 **Status:** Living document — updated as empirical measurements are taken.
-**Last Updated:** 2026-09-08
+**Last Updated:** 2026-09-11
 **Scope:** Zoho Catalyst capabilities relevant to habify30, measured empirically in Development with synthetic data. Production is never touched during probing.
 
 This document records what Catalyst can and cannot do, with measured evidence. It is the reference for architecture decisions that depend on platform behaviour. No-Redundancy: the Decision Log references this document; decision rationale lives there, not here. The same cut applies to 15_Technical_Architecture.md (DL-088): platform mechanics — console paths, service models, configuration scoping, measured limits — live here; 15_Tech carries only what follows from them for habify30, plus a pointer to the cluster. Execution detail (concrete names, values, setup steps) lives in the habify-app repository, not in the canon.
@@ -320,6 +320,11 @@ This cluster documents how AI-coach-related data moves through Catalyst infrastr
 > as compromised once the function has been read. Corollary for code: never put a value in an
 > env var that is meant to be readable but not secret-bearing — a build marker belongs in the
 > source, not in the configuration.
+>
+> **Second addendum (2026-09-11): a Production function deployment wipes that function's
+> Production env vars, and a new function starts with none.** Both measured — see E5's second
+> correction for the deployment case. The scoping rule of this entry therefore has an
+> operational tail: per function, per environment, **and per deployment**.
 
 ### E3 — Slate custom domains: where they live, and a broken value to avoid
 
@@ -467,6 +472,43 @@ is deliberately no oracle — `if (!adminKey || body.key !== adminKey)` answers 
 key and a wrong key alike — so an external probe cannot distinguish "set" from "unset" either.
 Confirming that a secret env var is present is therefore a human's visual check in the
 console, not an agent's API call. Reading it to "verify" burns it.
+
+**Second correction (2026-09-11) — three findings from the first full Production round.**
+
+*Job Scheduling in Production is promotion-only, whatever the docs say about dynamic crons.*
+The MCP rejects `Create_Job_Pool` in Production (`INVALID_OPERATION`), as E5 already recorded.
+The console goes further: opening Job Scheduling in the Production view shows no pool list and
+no cron list at all, only *"Deploy Service to Production — you are attempting to access this
+service in production while it has not been deployed to production yet."* The documented
+permission for dynamic crons has no surface to act on. And promotion copies **the whole
+component in its Development state**: every pool, every cron, each with its current enabled
+flag — an individual cron cannot be picked (*"Selected 0/2"* counts Job Pool and Cron as the
+two components). What Production is meant to differ in has to be set in Development first,
+promoted, then reverted. On 2026-09-11 that meant: delete the retired Webhook pool and both
+old crons in Development, disable the one remaining cron, promote, re-enable in Development.
+Production ended up with exactly one pool and one disabled cron — a first-time promotion,
+which the wizard announces as *"No diff generations for first time deployments … Catalyst will
+clone the entire service."*
+
+*Production env vars are set from the Development view.* The variable table has a *Variable
+Environment* dropdown; switched to Production it lists Production values but offers no
+*Add Variable*. Adding is done in the Development view through *Add Variable*, whose form
+carries a *Select Environment* radio (Development / Production / Both) and switches its value
+field accordingly. The *Update* form on an existing row has no Production field. So a variable
+that exists only in Development cannot be "extended" to Production — it is added again, with
+Production selected.
+
+*A function deployment to Production wipes that function's Production env vars.* On
+2026-09-10 the Production view of `peer` showed `PEER_ORIGIN` and `ADMIN_KEY` (visual check in
+the **Production** dropdown view, confirmed 2026-09-11). On 2026-09-11 `peer` was deployed to
+Production through the wizard — functions only, diff showing `peer` as *Updated*. Afterwards
+the Production view of `peer` was **empty**; the values had to be re-entered. The deployment
+replaced the function's configuration along with its code. **Every Production function
+deployment must be followed by re-entering that function's Production env vars, secrets
+included** — and until that is done the function runs silently misconfigured: `PEER_ORIGIN`
+missing skips every mail that carries a link, `ZEPTOMAIL_TOKEN` missing skips every mail. Both
+are fail-open by design (DL-053), so nothing in the response reveals it. Add it to the
+runbook; it will not announce itself.
 
 **Distinct from E2 and B5.** B5 concerns whether columns can be created at all (they can, in
 Development); E2 concerns env-var scoping. This entry concerns the environment boundary, which
