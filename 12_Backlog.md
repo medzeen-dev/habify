@@ -2,7 +2,7 @@
 
 **Document Version:** 1.0
 **Status:** Living Document
-**Last Updated:** July 2026
+**Last Updated:** 2026-09-12
 
 ---
 
@@ -513,6 +513,22 @@ A fully voluntary AI chat assistant available to participants on request, distin
 Web Push notifications (parked)
 
 Idea: website-driven push notifications triggered by Catalyst data changes, considered as a companion/alternative reminder mechanism during the 2026-07-10/11 brainstorming. Explicitly parked by Matthias, not rejected — distinct from 10_Rejected_Ideas.md, which documents ideas actively decided against. Raised alongside DL-019's existing "no digital reminder channel" decision; reopening this would need to be weighed against that rationale (preserving peer interaction's cueing function, avoiding the pseudonymity-architecture complexity a push-subscription mechanism would reintroduce).
+
+---
+
+## PB-046
+
+Recovery-code PDF: designed layout
+
+"Code als PDF sichern" (DL-042) today produces a plain-text page from jsPDF's built-in Helvetica/Courier (`shell/src/lib/recoveryPdf.ts`): title, four lines of explanation, the code. DL-042 lists the PDF's content design as build prerequisite **C5** — code, programme context, consequence of loss — and nothing has been designed since. Path: layout in Figma first (wordmark, Manrope embedded from the self-hosted fonts, programme name from `AccessControl`, the DL-042 copy), then the generator. Found while walking the Wizard on the first Development deployment of the Shell, 2026-09-11. Before the first real cohort.
+
+---
+
+## PB-047
+
+Impressum and Datenschutz pages in the Shell
+
+The Shell footer links `#impressum` and `#datenschutz` (DL-045, structure item 7); neither route has a screen. Two pages in the Shell layout are needed. The Impressum is presumably the one from `www.k-a-d-o.com` (`kado-web`); the privacy notice is **not** the website's — it has to describe the app's own model: no account, pid-only contexts, `uid` without personal reference, recovery code, Catalyst EU, ZeptoMail for the peer-group mails only. Wording comes from Matthias; the screens can be scaffolded before. Found 2026-09-11 on the first Development deployment. Before the first real cohort.
 
 ---
 
