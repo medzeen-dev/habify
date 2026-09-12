@@ -1,6 +1,6 @@
 # 00_Index.md — Themen-Index zum Decision Log
 
-**Stand:** 2026-09-11 (Decision Log bei DL-095)
+**Stand:** 2026-09-12 (Decision Log bei DL-096)
 **Zweck:** Vor jeder Arbeit an einem Thema hier nachsehen, welche DL-Einträge es berühren. Erst dann bauen.
 
 Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seite ohne Consent-Checkbox und ohne Domain-Validierung gebaut wurde — beides war seit **DL-036** spezifiziert. Der Fehler war nicht, dass die Doku schlecht organisiert war. Der Fehler war, dass nicht nachgesehen wurde.
@@ -27,6 +27,7 @@ Dieser Index existiert, weil in der Session vom 2026-07-14 eine Peergruppen-Seit
 | **DL-057** | Recovery-Pfad: `/recover` zuerst (liefert `pid` mit), danach `accesscontrol(pid)` · Rate-Limit auf `/recover` nicht optional |
 | **DL-058** | `accesscontrol` Response-Shape erweitert: `reason`, `expiryDate`, `programmName`, `contactEmail` |
 | **DL-059** | uid-Erzeugung von der Impulsphase nach **Wizard Schritt 2** verschoben · Schritt 2 muss idempotent sein · Seat-Zählung ab jetzt: Wizard-Abschlüsse |
+| **DL-096** | **Magic Link fürs weitere Gerät:** `recovery` bekommt `/link-issue` (uid → Token) und `/link-redeem` (Token → uid, pid, Code) · Token im **Catalyst Cache** (Segment `Default`), **30 Minuten**, Ablauf im Wert, **beim ersten Einlösen gelöscht** · keine Tabelle, kein Server-Mailversand · Shell-Einstieg `?ml=<token>` vor `?pid=` · QR im Browser gerendert · Handy-Button „E-Mail mit Link vorbereiten" (nicht „senden", wie DL-042) · konkretisiert DL-042 / DL-029-Notiz |
 | **DL-081** | **State-/Speicher-Vertrag:** ein gebündelter `localStorage`-Store `h30.state` (pid, userId, recoveryCode, wizardCompleted, language, reservierte `progress`/`ui`) mit `schemaVersion` · Autoritätsmodell (localStorage = Gerätewahrheit, Catalyst = Backend) · Server-Antwort-Shapes (accesscontrol/register/recover) · sensible Zonen (Coach-RAM DL-072, Themenlabels server/uid DL-073) außerhalb des Stores |
 
 **Vor dem Bau von:** Einstieg, Einstieg Code eingeben, Fehlerseite, Wizard, Einstellungen, Gerät verknüpfen, Recovery-Screens. **DL-081 ist Pflichtlektüre für jeden Screen, der Identität, Fortschritt oder das Capabilities-Objekt anfasst.**
